@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contactos - Mini CRM Académico</title>
+</head>
+
+<body>
+
+<h1>Mini CRM Académico</h1>
+
+<h2>Lista de Contactos</h2>
+
+<table border="1">
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Programa</th>
+        <th>Estado</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="contacto : ${contactos}">
+
+        <td th:text="${contacto.id}"></td>
+
+        <td th:text="${contacto.nombre}"></td>
+
+        <td th:text="${contacto.apellido}"></td>
+
+        <td th:text="${contacto.email}"></td>
+
+        <td th:text="${contacto.telefono}"></td>
+
+        <td th:text="${contacto.programa}"></td>
+
+        <td th:text="${contacto.estado}"></td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a href="/">
+    Volver al inicio
+</a>
+
+</body>
+
+</html>
