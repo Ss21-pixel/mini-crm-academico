@@ -2,9 +2,8 @@ package com.etitc.crm.controller;
 
 import com.etitc.crm.entity.Contacto;
 import com.etitc.crm.entity.Oportunidad;
-import com.etitc.crm.repository.ContactoRepository;
-import com.etitc.crm.repository.OportunidadRepository;
-
+import com.etitc.crm.service.ContactoService;
+import com.etitc.crm.service.OportunidadService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,41 +14,53 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class OportunidadController {
 
-    private final OportunidadRepository repository;
-    private final ContactoRepository contactoRepository;
+    private final OportunidadService oportunidadService;
+    private final ContactoService contactoService;
 
     public OportunidadController(
-            OportunidadRepository repository,
-            ContactoRepository contactoRepository) {
+            OportunidadService oportunidadService,
+            ContactoService contactoService) {
 
-        this.repository = repository;
-        this.contactoRepository = contactoRepository;
+        this.oportunidadService = oportunidadService;
+        this.contactoService = contactoService;
     }
+
+    // =========================
+    // LISTAR OPORTUNIDADES
+    // =========================
 
     @GetMapping
     public List<Oportunidad> listar() {
-        return repository.findAll();
+        return oportunidadService.listarTodos();
     }
+
+    // =========================
+    // BUSCAR POR ID
+    // =========================
 
     @GetMapping("/{id}")
     public ResponseEntity<Oportunidad> obtener(@PathVariable Long id) {
 
-        return repository.findById(id)
+        return oportunidadService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    // =========================
+    // CREAR OPORTUNIDAD
+    // =========================
 
     @PostMapping
     public ResponseEntity<Oportunidad> crear(
             @RequestBody Oportunidad oportunidad) {
 
         if (oportunidad.getContacto() != null &&
-            oportunidad.getContacto().getId() != null) {
+                oportunidad.getContacto().getId() != null) {
 
             Long contactoId = oportunidad.getContacto().getId();
 
-            Contacto contacto = contactoRepository
-                    .findById(contactoId)
+            Contacto contacto = contactoService
+                    .buscarPorId(contactoId)
                     .orElse(null);
 
             if (contacto == null) {
@@ -59,15 +70,21 @@ public class OportunidadController {
             oportunidad.setContacto(contacto);
         }
 
-        return ResponseEntity.ok(repository.save(oportunidad));
+        return ResponseEntity.ok(
+                oportunidadService.guardar(oportunidad)
+        );
     }
+
+    // =========================
+    // ACTUALIZAR OPORTUNIDAD
+    // =========================
 
     @PutMapping("/{id}")
     public ResponseEntity<Oportunidad> actualizar(
             @PathVariable Long id,
             @RequestBody Oportunidad datos) {
 
-        return repository.findById(id)
+        return oportunidadService.buscarPorId(id)
                 .map(oportunidad -> {
 
                     oportunidad.setTitulo(datos.getTitulo());
@@ -75,32 +92,39 @@ public class OportunidadController {
                     oportunidad.setEstado(datos.getEstado());
                     oportunidad.setPrioridad(datos.getPrioridad());
                     oportunidad.setFechaCreacion(
-                            datos.getFechaCreacion());
+                            datos.getFechaCreacion()
+                    );
                     oportunidad.setFechaSeguimiento(
-                            datos.getFechaSeguimiento());
+                            datos.getFechaSeguimiento()
+                    );
 
                     if (datos.getContacto() != null &&
-                        datos.getContacto().getId() != null) {
+                            datos.getContacto().getId() != null) {
 
-                        contactoRepository
-                                .findById(datos.getContacto().getId())
+                        contactoService
+                                .buscarPorId(datos.getContacto().getId())
                                 .ifPresent(oportunidad::setContacto);
                     }
 
                     return ResponseEntity.ok(
-                            repository.save(oportunidad));
+                            oportunidadService.guardar(oportunidad)
+                    );
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // =========================
+    // ELIMINAR OPORTUNIDAD
+    // =========================
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
 
-        if (!repository.existsById(id)) {
+        if (oportunidadService.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        repository.deleteById(id);
+        oportunidadService.eliminar(id);
 
         return ResponseEntity.noContent().build();
     }

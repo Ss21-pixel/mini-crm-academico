@@ -2,9 +2,8 @@ package com.etitc.crm.controller;
 
 import com.etitc.crm.entity.Comunicacion;
 import com.etitc.crm.entity.Contacto;
-import com.etitc.crm.repository.ComunicacionRepository;
-import com.etitc.crm.repository.ContactoRepository;
-
+import com.etitc.crm.service.ComunicacionService;
+import com.etitc.crm.service.ContactoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,26 +14,26 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ComunicacionController {
 
-    private final ComunicacionRepository repository;
-    private final ContactoRepository contactoRepository;
+    private final ComunicacionService comunicacionService;
+    private final ContactoService contactoService;
 
     public ComunicacionController(
-            ComunicacionRepository repository,
-            ContactoRepository contactoRepository) {
+            ComunicacionService comunicacionService,
+            ContactoService contactoService) {
 
-        this.repository = repository;
-        this.contactoRepository = contactoRepository;
+        this.comunicacionService = comunicacionService;
+        this.contactoService = contactoService;
     }
 
     @GetMapping
     public List<Comunicacion> listar() {
-        return repository.findAll();
+        return comunicacionService.listarTodos();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Comunicacion> obtener(@PathVariable Long id) {
 
-        return repository.findById(id)
+        return comunicacionService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -44,13 +43,12 @@ public class ComunicacionController {
             @RequestBody Comunicacion comunicacion) {
 
         if (comunicacion.getContacto() != null &&
-            comunicacion.getContacto().getId() != null) {
+                comunicacion.getContacto().getId() != null) {
 
-            Long contactoId =
-                    comunicacion.getContacto().getId();
+            Long contactoId = comunicacion.getContacto().getId();
 
-            Contacto contacto = contactoRepository
-                    .findById(contactoId)
+            Contacto contacto = contactoService
+                    .buscarPorId(contactoId)
                     .orElse(null);
 
             if (contacto == null) {
@@ -61,7 +59,8 @@ public class ComunicacionController {
         }
 
         return ResponseEntity.ok(
-                repository.save(comunicacion));
+                comunicacionService.guardar(comunicacion)
+        );
     }
 
     @PutMapping("/{id}")
@@ -69,7 +68,7 @@ public class ComunicacionController {
             @PathVariable Long id,
             @RequestBody Comunicacion datos) {
 
-        return repository.findById(id)
+        return comunicacionService.buscarPorId(id)
                 .map(comunicacion -> {
 
                     comunicacion.setTipo(datos.getTipo());
@@ -78,19 +77,16 @@ public class ComunicacionController {
                     comunicacion.setFecha(datos.getFecha());
 
                     if (datos.getContacto() != null &&
-                        datos.getContacto().getId() != null) {
+                            datos.getContacto().getId() != null) {
 
-                        contactoRepository
-                                .findById(
-                                    datos.getContacto().getId()
-                                )
-                                .ifPresent(
-                                    comunicacion::setContacto
-                                );
+                        contactoService
+                                .buscarPorId(datos.getContacto().getId())
+                                .ifPresent(comunicacion::setContacto);
                     }
 
                     return ResponseEntity.ok(
-                            repository.save(comunicacion));
+                            comunicacionService.guardar(comunicacion)
+                    );
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -98,11 +94,11 @@ public class ComunicacionController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
 
-        if (!repository.existsById(id)) {
+        if (comunicacionService.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        repository.deleteById(id);
+        comunicacionService.eliminar(id);
 
         return ResponseEntity.noContent().build();
     }

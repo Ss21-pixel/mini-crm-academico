@@ -1,7 +1,7 @@
 package com.etitc.crm.service;
 
 import com.etitc.crm.entity.Comunicacion;
-import com.etitc.crm.repository.ComunicacionRepository;
+import com.etitc.crm.memory.MemoriaCRM;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,25 +10,25 @@ import java.util.Optional;
 @Service
 public class ComunicacionService {
 
-    private final ComunicacionRepository comunicacionRepository;
+    private final MemoriaCRM memoriaCRM;
 
-    public ComunicacionService(ComunicacionRepository comunicacionRepository) {
-        this.comunicacionRepository = comunicacionRepository;
+    public ComunicacionService(MemoriaCRM memoriaCRM) {
+        this.memoriaCRM = memoriaCRM;
     }
 
     public List<Comunicacion> listarTodos() {
-        return comunicacionRepository.findAll();
+        return memoriaCRM.listarComunicaciones();
     }
 
     public Optional<Comunicacion> buscarPorId(Long id) {
-        return comunicacionRepository.findById(id);
+        return memoriaCRM.buscarComunicacion(id);
     }
 
     public Comunicacion guardar(Comunicacion comunicacion) {
-        return comunicacionRepository.save(comunicacion);
+        return memoriaCRM.guardarComunicacion(comunicacion);
     }
 
     public void eliminar(Long id) {
-        comunicacionRepository.deleteById(id);
+        memoriaCRM.eliminarComunicacion(id);
     }
 }
