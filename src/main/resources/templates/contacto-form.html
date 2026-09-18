@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nuevo Contacto - Mini CRM Académico</title>
+</head>
+
+<body>
+
+<h1>Mini CRM Académico</h1>
+
+<h2>Registrar Nuevo Contacto</h2>
+
+<form th:action="@{/contactos/guardar}" th:object="${contacto}" method="post">
+
+    <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}">
+
+        <p th:if="${#fields.hasErrors('nombre')}"
+           th:errors="*{nombre}">
+        </p>
+    </div>
+
+    <br>
+
+    <div>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" th:field="*{apellido}">
+
+        <p th:if="${#fields.hasErrors('apellido')}"
+           th:errors="*{apellido}">
+        </p>
+    </div>
+
+    <br>
+
+    <div>
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" th:field="*{email}">
+
+        <p th:if="${#fields.hasErrors('email')}"
+           th:errors="*{email}">
+        </p>
+    </div>
+
+    <br>
+
+    <div>
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" th:field="*{telefono}">
+
+        <p th:if="${#fields.hasErrors('telefono')}"
+           th:errors="*{telefono}">
+        </p>
+    </div>
+
+    <br>
+
+    <div>
+        <label for="programa">Programa:</label>
+        <input type="text" id="programa" th:field="*{programa}">
+
+        <p th:if="${#fields.hasErrors('programa')}"
+           th:errors="*{programa}">
+        </p>
+    </div>
+
+    <br>
+
+    <div>
+        <label for="estado">Estado:</label>
+        <input type="text" id="estado" th:field="*{estado}">
+
+        <p th:if="${#fields.hasErrors('estado')}"
+           th:errors="*{estado}">
+        </p>
+    </div>
+
+    <br>
+
+    <button type="submit">Guardar Contacto</button>
+
+</form>
+
+<br>
+
+<a href="/contactos">
+    Volver al listado
+</a>
+
+</body>
+
+</html>

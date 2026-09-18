@@ -1,37 +1,33 @@
 package com.etitc.crm.entity;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "comunicaciones")
 public class Comunicacion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 30)
+    @NotBlank(message = "El tipo es obligatorio")
     private String tipo;
 
-    @Column(length = 150)
+    @NotBlank(message = "El asunto es obligatorio")
+    @Size(min = 2, max = 100, message = "El asunto debe tener entre 2 y 100 caracteres")
     private String asunto;
 
-    @Column(length = 500)
+    @NotBlank(message = "El mensaje es obligatorio")
+    @Size(min = 2, max = 500, message = "El mensaje debe tener entre 2 y 500 caracteres")
     private String mensaje;
 
-    @Column
+    @NotNull(message = "La fecha es obligatoria")
     private LocalDate fecha;
 
-    @ManyToOne
-    @JoinColumn(name = "contacto_id")
     private Contacto contacto;
 
-    // Constructor vacío
     public Comunicacion() {
     }
-
-    // Getters y Setters
 
     public Long getId() {
         return id;

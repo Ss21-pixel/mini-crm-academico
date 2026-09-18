@@ -1,43 +1,39 @@
 package com.etitc.crm.entity;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "oportunidades")
 public class Oportunidad {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 150)
+    @NotBlank(message = "El título es obligatorio")
+    @Size(min = 2, max = 100, message = "El título debe tener entre 2 y 100 caracteres")
     private String titulo;
 
-    @Column(length = 500)
+    @NotBlank(message = "La descripción es obligatoria")
+    @Size(min = 2, max = 500, message = "La descripción debe tener entre 2 y 500 caracteres")
     private String descripcion;
 
-    @Column(length = 50)
+    @NotBlank(message = "El estado es obligatorio")
     private String estado;
 
-    @Column(length = 30)
+    @NotBlank(message = "La prioridad es obligatoria")
     private String prioridad;
 
-    @ManyToOne
-    @JoinColumn(name = "contacto_id")
     private Contacto contacto;
 
-    @Column(name = "fecha_creacion")
+    @NotNull(message = "La fecha de creación es obligatoria")
     private LocalDate fechaCreacion;
 
-    @Column(name = "fecha_seguimiento")
+    @NotNull(message = "La fecha de seguimiento es obligatoria")
     private LocalDate fechaSeguimiento;
 
-    // Constructor vacío
     public Oportunidad() {
     }
-
-    // Getters y Setters
 
     public Long getId() {
         return id;
@@ -92,7 +88,7 @@ public class Oportunidad {
     }
 
     public void setFechaCreacion(LocalDate fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    this.fechaCreacion = fechaCreacion;
     }
 
     public LocalDate getFechaSeguimiento() {

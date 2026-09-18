@@ -1,38 +1,37 @@
 package com.etitc.crm.entity;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "contactos")
 public class Contacto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100)
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String nombre;
 
-    @Column(length = 100)
+    @NotBlank(message = "El apellido es obligatorio")
+    @Size(min = 2, max = 50, message = "El apellido debe tener entre 2 y 50 caracteres")
     private String apellido;
 
-    @Column(length = 150)
+    @NotBlank(message = "El correo electrónico es obligatorio")
+    @Email(message = "Ingrese un correo electrónico válido")
     private String email;
 
-    @Column(length = 20)
+    @NotBlank(message = "El teléfono es obligatorio")
+    @Size(min = 7, max = 15, message = "El teléfono debe tener entre 7 y 15 caracteres")
     private String telefono;
 
-    @Column(length = 150)
+    @NotBlank(message = "El programa es obligatorio")
     private String programa;
 
-    @Column(length = 50)
+    @NotBlank(message = "El estado es obligatorio")
     private String estado;
 
-    // Constructor vacío
     public Contacto() {
     }
-
-    // Getters y Setters
 
     public Long getId() {
         return id;
