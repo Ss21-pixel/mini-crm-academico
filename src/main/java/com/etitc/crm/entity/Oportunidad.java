@@ -1,13 +1,24 @@
 package com.etitc.crm.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "oportunidades")
 public class Oportunidad {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "El título es obligatorio")
@@ -24,6 +35,8 @@ public class Oportunidad {
     @NotBlank(message = "La prioridad es obligatoria")
     private String prioridad;
 
+    @ManyToOne
+    @JoinColumn(name = "contacto_id")
     private Contacto contacto;
 
     @NotNull(message = "La fecha de creación es obligatoria")
@@ -88,7 +101,7 @@ public class Oportunidad {
     }
 
     public void setFechaCreacion(LocalDate fechaCreacion) {
-    this.fechaCreacion = fechaCreacion;
+        this.fechaCreacion = fechaCreacion;
     }
 
     public LocalDate getFechaSeguimiento() {

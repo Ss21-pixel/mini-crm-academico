@@ -1,13 +1,24 @@
 package com.etitc.crm.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "comunicaciones")
 public class Comunicacion {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "El tipo es obligatorio")
@@ -24,6 +35,8 @@ public class Comunicacion {
     @NotNull(message = "La fecha es obligatoria")
     private LocalDate fecha;
 
+    @ManyToOne
+    @JoinColumn(name = "contacto_id")
     private Contacto contacto;
 
     public Comunicacion() {

@@ -1,7 +1,7 @@
 package com.etitc.crm.service;
 
 import com.etitc.crm.entity.Oportunidad;
-import com.etitc.crm.memory.MemoriaCRM;
+import com.etitc.crm.repository.OportunidadRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,25 +10,25 @@ import java.util.Optional;
 @Service
 public class OportunidadService {
 
-    private final MemoriaCRM memoriaCRM;
+    private final OportunidadRepository oportunidadRepository;
 
-    public OportunidadService(MemoriaCRM memoriaCRM) {
-        this.memoriaCRM = memoriaCRM;
+    public OportunidadService(OportunidadRepository oportunidadRepository) {
+        this.oportunidadRepository = oportunidadRepository;
     }
 
     public List<Oportunidad> listarTodos() {
-        return memoriaCRM.listarOportunidades();
+        return oportunidadRepository.findAll();
     }
 
     public Optional<Oportunidad> buscarPorId(Long id) {
-        return memoriaCRM.buscarOportunidad(id);
+        return oportunidadRepository.findById(id);
     }
 
     public Oportunidad guardar(Oportunidad oportunidad) {
-        return memoriaCRM.guardarOportunidad(oportunidad);
+        return oportunidadRepository.save(oportunidad);
     }
 
     public void eliminar(Long id) {
-        memoriaCRM.eliminarOportunidad(id);
+        oportunidadRepository.deleteById(id);
     }
 }
