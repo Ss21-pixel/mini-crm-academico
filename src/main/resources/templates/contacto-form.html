@@ -5,16 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Nuevo Contacto - Mini CRM Académico</title>
+    <title th:text="${contacto.id == null ? 'Nuevo Contacto' : 'Editar Contacto'}">
+        Contacto - Mini CRM Académico
+    </title>
 </head>
 
 <body>
 
 <h1>Mini CRM Académico</h1>
 
-<h2>Registrar Nuevo Contacto</h2>
+<h2 th:text="${contacto.id == null ? 'Registrar Nuevo Contacto' : 'Editar Contacto'}">
+    Contacto
+</h2>
 
-<form th:action="@{/contactos/guardar}" th:object="${contacto}" method="post">
+<form th:action="${contacto.id == null ? '/contactos/guardar' : '/contactos/actualizar'}"
+      th:object="${contacto}"
+      method="post">
+
+    <input type="hidden" th:field="*{id}">
 
     <div>
         <label for="nombre">Nombre:</label>
@@ -82,7 +90,10 @@
 
     <br>
 
-    <button type="submit">Guardar Contacto</button>
+    <button type="submit"
+            th:text="${contacto.id == null ? 'Guardar Contacto' : 'Actualizar Contacto'}">
+        Guardar
+    </button>
 
 </form>
 
