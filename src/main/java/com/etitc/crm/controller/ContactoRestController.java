@@ -1,9 +1,10 @@
 
 package com.etitc.crm.controller;
 
-import com.etitc.crm.entity.Contacto;
+import com.etitc.crm.modelo.Contacto;
 import com.etitc.crm.service.ContactoService;
 import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class ContactoRestController {
 
     // CREAR CONTACTO
     @PostMapping
-    public Contacto crear(@RequestBody Contacto contacto) {
+    public Contacto crear(@Valid @RequestBody Contacto contacto) {
         return contactoService.guardar(contacto);
     }
 
@@ -43,7 +44,7 @@ public class ContactoRestController {
     @PutMapping("/{id}")
     public ResponseEntity<Contacto> actualizar(
             @PathVariable Long id,
-            @RequestBody Contacto contacto) {
+            @Valid @RequestBody Contacto contacto) {
 
         return contactoService.buscarPorId(id)
                 .map(contactoExistente -> {

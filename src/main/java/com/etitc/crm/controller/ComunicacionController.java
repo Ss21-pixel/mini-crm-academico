@@ -1,9 +1,10 @@
 package com.etitc.crm.controller;
 
-import com.etitc.crm.entity.Comunicacion;
-import com.etitc.crm.entity.Contacto;
+import com.etitc.crm.modelo.Comunicacion;
+import com.etitc.crm.modelo.Contacto;
 import com.etitc.crm.service.ComunicacionService;
 import com.etitc.crm.service.ContactoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +41,7 @@ public class ComunicacionController {
 
     @PostMapping
     public ResponseEntity<Comunicacion> crear(
-            @RequestBody Comunicacion comunicacion) {
+        @Valid @RequestBody Comunicacion comunicacion) {
 
         if (comunicacion.getContacto() != null &&
                 comunicacion.getContacto().getId() != null) {
@@ -65,8 +66,8 @@ public class ComunicacionController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Comunicacion> actualizar(
-            @PathVariable Long id,
-            @RequestBody Comunicacion datos) {
+        @PathVariable Long id,
+        @Valid @RequestBody Comunicacion datos) {
 
         return comunicacionService.buscarPorId(id)
                 .map(comunicacion -> {

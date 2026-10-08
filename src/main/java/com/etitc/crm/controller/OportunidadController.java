@@ -1,9 +1,10 @@
 package com.etitc.crm.controller;
 
-import com.etitc.crm.entity.Contacto;
-import com.etitc.crm.entity.Oportunidad;
+import com.etitc.crm.modelo.Contacto;
+import com.etitc.crm.modelo.Oportunidad;
 import com.etitc.crm.service.ContactoService;
 import com.etitc.crm.service.OportunidadService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,7 +53,7 @@ public class OportunidadController {
 
     @PostMapping
     public ResponseEntity<Oportunidad> crear(
-            @RequestBody Oportunidad oportunidad) {
+        @Valid @RequestBody Oportunidad oportunidad) {
 
         if (oportunidad.getContacto() != null &&
                 oportunidad.getContacto().getId() != null) {
@@ -81,8 +82,8 @@ public class OportunidadController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Oportunidad> actualizar(
-            @PathVariable Long id,
-            @RequestBody Oportunidad datos) {
+        @PathVariable Long id,
+        @Valid @RequestBody Oportunidad datos) {
 
         return oportunidadService.buscarPorId(id)
                 .map(oportunidad -> {

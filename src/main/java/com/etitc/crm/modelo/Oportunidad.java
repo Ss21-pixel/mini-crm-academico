@@ -1,4 +1,4 @@
-package com.etitc.crm.entity;
+package com.etitc.crm.modelo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +35,7 @@ public class Oportunidad {
     @NotBlank(message = "La prioridad es obligatoria")
     private String prioridad;
 
+    @NotNull(message = "El contacto es obligatorio")
     @ManyToOne
     @JoinColumn(name = "contacto_id")
     private Contacto contacto;

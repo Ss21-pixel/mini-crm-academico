@@ -1,4 +1,4 @@
-package com.etitc.crm.entity;
+package com.etitc.crm.modelo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

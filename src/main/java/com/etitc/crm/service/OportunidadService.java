@@ -1,6 +1,6 @@
 package com.etitc.crm.service;
 
-import com.etitc.crm.entity.Oportunidad;
+import com.etitc.crm.modelo.Oportunidad;
 import com.etitc.crm.repository.OportunidadRepository;
 import org.springframework.stereotype.Service;
 

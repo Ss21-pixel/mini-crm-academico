@@ -1,8 +1,8 @@
 package com.etitc.crm.memory;
 
-import com.etitc.crm.entity.Contacto;
-import com.etitc.crm.entity.Comunicacion;
-import com.etitc.crm.entity.Oportunidad;
+import com.etitc.crm.modelo.Contacto;
+import com.etitc.crm.modelo.Comunicacion;
+import com.etitc.crm.modelo.Oportunidad;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

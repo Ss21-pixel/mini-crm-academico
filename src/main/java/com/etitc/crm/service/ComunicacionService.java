@@ -1,6 +1,6 @@
 package com.etitc.crm.service;
 
-import com.etitc.crm.entity.Comunicacion;
+import com.etitc.crm.modelo.Comunicacion;
 import com.etitc.crm.repository.ComunicacionRepository;
 import org.springframework.stereotype.Service;
 
