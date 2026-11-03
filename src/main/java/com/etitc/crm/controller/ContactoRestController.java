@@ -3,11 +3,14 @@ package com.etitc.crm.controller;
 
 import com.etitc.crm.modelo.Contacto;
 import com.etitc.crm.service.ContactoService;
-import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/contactos")
@@ -19,35 +22,73 @@ public class ContactoRestController {
         this.contactoService = contactoService;
     }
 
-    // LISTAR CONTACTOS
+    // =====================================
+    // GET: LISTAR TODOS LOS CONTACTOS
+    // =====================================
+
     @GetMapping
-    public List<Contacto> listar() {
-        return contactoService.listarTodos();
+    public ResponseEntity<List<Contacto>> listar() {
+
+        return ResponseEntity.ok(
+                contactoService.listarTodos()
+        );
     }
 
-    // BUSCAR CONTACTO POR ID
+    // =====================================
+    // GET: BUSCAR CONTACTO POR ID
+    // =====================================
+
     @GetMapping("/{id}")
-    public ResponseEntity<Contacto> buscar(@PathVariable Long id) {
+    public ResponseEntity<?> buscar(@PathVariable Long id) {
 
         return contactoService.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of(
+                                "mensaje", "No se encontró el contacto con ID: " + id
+                        )));
     }
 
-    // CREAR CONTACTO
+    // =====================================
+    // POST: CREAR CONTACTO
+    // =====================================
+
     @PostMapping
-    public Contacto crear(@Valid @RequestBody Contacto contacto) {
-        return contactoService.guardar(contacto);
+    public ResponseEntity<?> crear(
+            @Valid @RequestBody Contacto contacto) {
+
+        if (contactoService.emailDuplicado(contacto)) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("mensaje", "El correo electrónico ya está registrado")
+            );
+        }
+
+        Contacto nuevoContacto = contactoService.guardar(contacto);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(nuevoContacto);
     }
 
-    // ACTUALIZAR CONTACTO
+    // =====================================
+    // PUT: ACTUALIZAR CONTACTO
+    // =====================================
+
     @PutMapping("/{id}")
-    public ResponseEntity<Contacto> actualizar(
+    public ResponseEntity<?> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody Contacto contacto) {
 
         return contactoService.buscarPorId(id)
-                .map(contactoExistente -> {
+                .<ResponseEntity<?>>map(contactoExistente -> {
+
+                    contacto.setId(id);
+
+                    if (contactoService.emailDuplicado(contacto)) {
+                        return ResponseEntity.badRequest().body(
+                                Map.of("mensaje",
+                                        "El correo electrónico ya está registrado")
+                        );
+                    }
 
                     contactoExistente.setNombre(contacto.getNombre());
                     contactoExistente.setApellido(contacto.getApellido());
@@ -56,23 +97,35 @@ public class ContactoRestController {
                     contactoExistente.setPrograma(contacto.getPrograma());
                     contactoExistente.setEstado(contacto.getEstado());
 
-                    return ResponseEntity.ok(
-                            contactoService.guardar(contactoExistente)
-                    );
+                    Contacto actualizado =
+                            contactoService.guardar(contactoExistente);
+
+                    return ResponseEntity.ok(actualizado);
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of(
+                                "mensaje", "No se encontró el contacto con ID: " + id
+                        )));
     }
 
-    // ELIMINAR CONTACTO
+    // =====================================
+    // DELETE: ELIMINAR CONTACTO
+    // =====================================
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
 
         if (contactoService.buscarPorId(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of(
+                            "mensaje", "No se encontró el contacto con ID: " + id
+                    ));
         }
 
         contactoService.eliminar(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(
+                Map.of("mensaje", "Contacto eliminado correctamente")
+        );
     }
 }
