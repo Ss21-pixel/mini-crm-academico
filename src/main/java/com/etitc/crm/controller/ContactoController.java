@@ -24,10 +24,6 @@ public class ContactoController {
         this.contactoService = contactoService;
     }
 
-    // ==============================
-    // LISTAR + BUSCAR + PAGINAR
-    // ==============================
-
     @GetMapping
     public String listarContactos(
             @RequestParam(defaultValue = "") String q,
@@ -48,21 +44,11 @@ public class ContactoController {
         return "contactos";
     }
 
-    // ==============================
-    // NUEVO CONTACTO
-    // ==============================
-
     @GetMapping("/nuevo")
     public String mostrarFormularioNuevo(Model model) {
-
         model.addAttribute("contacto", new Contacto());
-
         return "contacto-form";
     }
-
-    // ==============================
-    // EDITAR CONTACTO
-    // ==============================
 
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(
@@ -70,26 +56,17 @@ public class ContactoController {
             Model model,
             RedirectAttributes redirectAttributes) {
 
-        Contacto contacto = contactoService.buscarPorId(id)
-                .orElse(null);
+        Contacto contacto = contactoService.buscarPorId(id).orElse(null);
 
         if (contacto == null) {
             redirectAttributes.addFlashAttribute(
-                    "error",
-                    "El contacto no fue encontrado."
-            );
-
+                    "error", "El contacto no fue encontrado.");
             return "redirect:/contactos";
         }
 
         model.addAttribute("contacto", contacto);
-
         return "contacto-form";
     }
-
-    // ==============================
-    // GUARDAR / ACTUALIZAR
-    // ==============================
 
     @PostMapping("/guardar")
     public String guardarContacto(
@@ -102,38 +79,24 @@ public class ContactoController {
         }
 
         if (contactoService.emailDuplicado(contacto)) {
-
             result.rejectValue(
                     "email",
                     "error.contacto",
-                    "Ya existe un contacto registrado con este correo."
-            );
-
+                    "Ya existe un contacto registrado con este correo.");
             return "contacto-form";
         }
 
         boolean nuevo = contacto.getId() == null;
-
         contactoService.guardar(contacto);
 
-        if (nuevo) {
-            redirectAttributes.addFlashAttribute(
-                    "mensaje",
-                    "Contacto creado correctamente."
-            );
-        } else {
-            redirectAttributes.addFlashAttribute(
-                    "mensaje",
-                    "Contacto actualizado correctamente."
-            );
-        }
+        redirectAttributes.addFlashAttribute(
+                "mensaje",
+                nuevo
+                        ? "Contacto creado correctamente."
+                        : "Contacto actualizado correctamente.");
 
         return "redirect:/contactos";
     }
-
-    // ==============================
-    // ELIMINAR
-    // ==============================
 
     @PostMapping("/eliminar/{id}")
     public String eliminarContacto(
@@ -141,20 +104,13 @@ public class ContactoController {
             RedirectAttributes redirectAttributes) {
 
         try {
-
             contactoService.eliminar(id);
-
             redirectAttributes.addFlashAttribute(
-                    "mensaje",
-                    "Contacto eliminado correctamente."
-            );
-
+                    "mensaje", "Contacto eliminado correctamente.");
         } catch (Exception e) {
-
             redirectAttributes.addFlashAttribute(
                     "error",
-                    "No se pudo eliminar el contacto. Puede tener información relacionada."
-            );
+                    "No se pudo eliminar el contacto. Puede tener información relacionada.");
         }
 
         return "redirect:/contactos";

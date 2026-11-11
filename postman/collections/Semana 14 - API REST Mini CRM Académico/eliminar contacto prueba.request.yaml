@@ -1,0 +1,7 @@
+$kind: http-request
+url: http://localhost:8080/api/contactos/28
+method: DELETE
+body:
+  type: json
+  content: ""
+order: 7000

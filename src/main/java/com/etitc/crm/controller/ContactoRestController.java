@@ -1,16 +1,23 @@
 
 package com.etitc.crm.controller;
 
+import com.etitc.crm.dto.ContactoRequest;
+import com.etitc.crm.dto.ContactoResponse;
 import com.etitc.crm.modelo.Contacto;
 import com.etitc.crm.service.ContactoService;
+
 import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+
+import java.net.URI;
+
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/contactos")
@@ -22,110 +29,75 @@ public class ContactoRestController {
         this.contactoService = contactoService;
     }
 
-    // =====================================
-    // GET: LISTAR TODOS LOS CONTACTOS
-    // =====================================
-
+    // GET: LISTAR TODOS
     @GetMapping
-    public ResponseEntity<List<Contacto>> listar() {
+    public ResponseEntity<List<ContactoResponse>> listar() {
+
+        List<ContactoResponse> contactos =
+                contactoService.listarTodos()
+                        .stream()
+                        .map(ContactoResponse::desde)
+                        .toList();
+
+        return ResponseEntity.ok(contactos);
+    }
+
+    // GET: BUSCAR POR ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ContactoResponse> buscar(
+            @PathVariable Long id
+    ) {
+
+        Contacto contacto = contactoService.obtenerPorId(id);
 
         return ResponseEntity.ok(
-                contactoService.listarTodos()
+                ContactoResponse.desde(contacto)
         );
     }
 
-    // =====================================
-    // GET: BUSCAR CONTACTO POR ID
-    // =====================================
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscar(@PathVariable Long id) {
-
-        return contactoService.buscarPorId(id)
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Map.of(
-                                "mensaje", "No se encontró el contacto con ID: " + id
-                        )));
-    }
-
-    // =====================================
-    // POST: CREAR CONTACTO
-    // =====================================
-
+    // POST: CREAR
     @PostMapping
-    public ResponseEntity<?> crear(
-            @Valid @RequestBody Contacto contacto) {
+    public ResponseEntity<ContactoResponse> crear(
+            @Valid @RequestBody ContactoRequest request
+    ) {
 
-        if (contactoService.emailDuplicado(contacto)) {
-            return ResponseEntity.badRequest().body(
-                    Map.of("mensaje", "El correo electrónico ya está registrado")
-            );
-        }
+        Contacto nuevo = contactoService.crearDesdeApi(request);
 
-        Contacto nuevoContacto = contactoService.guardar(contacto);
+        URI location = URI.create(
+                "/api/contactos/" + nuevo.getId()
+        );
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(nuevoContacto);
+        return ResponseEntity
+                .created(location)
+                .body(ContactoResponse.desde(nuevo));
     }
 
-    // =====================================
-    // PUT: ACTUALIZAR CONTACTO
-    // =====================================
-
+    // PUT: ACTUALIZAR
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(
+    public ResponseEntity<ContactoResponse> actualizar(
             @PathVariable Long id,
-            @Valid @RequestBody Contacto contacto) {
+            @Valid @RequestBody ContactoRequest request
+    ) {
 
-        return contactoService.buscarPorId(id)
-                .<ResponseEntity<?>>map(contactoExistente -> {
+        Contacto actualizado =
+                contactoService.actualizarDesdeApi(id, request);
 
-                    contacto.setId(id);
-
-                    if (contactoService.emailDuplicado(contacto)) {
-                        return ResponseEntity.badRequest().body(
-                                Map.of("mensaje",
-                                        "El correo electrónico ya está registrado")
-                        );
-                    }
-
-                    contactoExistente.setNombre(contacto.getNombre());
-                    contactoExistente.setApellido(contacto.getApellido());
-                    contactoExistente.setEmail(contacto.getEmail());
-                    contactoExistente.setTelefono(contacto.getTelefono());
-                    contactoExistente.setPrograma(contacto.getPrograma());
-                    contactoExistente.setEstado(contacto.getEstado());
-
-                    Contacto actualizado =
-                            contactoService.guardar(contactoExistente);
-
-                    return ResponseEntity.ok(actualizado);
-                })
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Map.of(
-                                "mensaje", "No se encontró el contacto con ID: " + id
-                        )));
+        return ResponseEntity.ok(
+                ContactoResponse.desde(actualizado)
+        );
     }
 
-    // =====================================
-    // DELETE: ELIMINAR CONTACTO
-    // =====================================
-
+    // DELETE: ELIMINAR
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(
+            @PathVariable Long id
+    ) {
 
-        if (contactoService.buscarPorId(id).isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of(
-                            "mensaje", "No se encontró el contacto con ID: " + id
-                    ));
-        }
-
+        contactoService.obtenerPorId(id);
         contactoService.eliminar(id);
 
-        return ResponseEntity.ok(
-                Map.of("mensaje", "Contacto eliminado correctamente")
-        );
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }

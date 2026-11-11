@@ -1,0 +1,22 @@
+$kind: http-request
+url: http://localhost:8080/api/contactos/1
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \  \"nombre\": \"Carlos\",\r
+
+    \  \"apellido\": \"Actualizado Semana 14\",\r
+
+    \  \"email\": \"carlos.prueba14@example.com\",\r
+
+    \  \"telefono\": \"3001234567\",\r
+
+    \  \"programa\": \"Tecnología en Desarrollo de Software\",\r
+
+    \  \"estado\": \"ACTIVO\"\r
+
+    }"
+examples: .resources/actualizar contacto.resources/examples
+order: 4000

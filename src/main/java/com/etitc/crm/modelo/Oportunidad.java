@@ -22,11 +22,13 @@ public class Oportunidad {
     private Long id;
 
     @NotBlank(message = "El título es obligatorio")
-    @Size(min = 2, max = 100, message = "El título debe tener entre 2 y 100 caracteres")
+    @Size(min = 2, max = 100,
+            message = "El título debe tener entre 2 y 100 caracteres")
     private String titulo;
 
     @NotBlank(message = "La descripción es obligatoria")
-    @Size(min = 2, max = 500, message = "La descripción debe tener entre 2 y 500 caracteres")
+    @Size(min = 2, max = 500,
+            message = "La descripción debe tener entre 2 y 500 caracteres")
     private String descripcion;
 
     @NotBlank(message = "El estado es obligatorio")

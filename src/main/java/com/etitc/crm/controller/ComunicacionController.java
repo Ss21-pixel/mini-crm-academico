@@ -40,30 +40,30 @@ public class ComunicacionController {
     }
 
     @PostMapping
-    public ResponseEntity<Comunicacion> crear(
+public ResponseEntity<Comunicacion> crear(
         @Valid @RequestBody Comunicacion comunicacion) {
 
-        if (comunicacion.getContacto() != null &&
-                comunicacion.getContacto().getId() != null) {
+    if (comunicacion.getContacto() != null &&
+            comunicacion.getContacto().getId() != null) {
 
-            Long contactoId = comunicacion.getContacto().getId();
+        Long contactoId = comunicacion.getContacto().getId();
 
-            Contacto contacto = contactoService
-                    .buscarPorId(contactoId)
-                    .orElse(null);
+        Contacto contacto = contactoService
+                .buscarPorId(contactoId)
+                .orElse(null);
 
-            if (contacto == null) {
-                return ResponseEntity.badRequest().build();
-            }
-
-            comunicacion.setContacto(contacto);
+        if (contacto == null) {
+            return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(
-                comunicacionService.guardar(comunicacion)
-        );
+        comunicacion.setContacto(contacto);
     }
 
+    Comunicacion nuevaComunicacion =
+            comunicacionService.guardar(comunicacion);
+
+    return ResponseEntity.status(201).body(nuevaComunicacion);
+}
     @PutMapping("/{id}")
     public ResponseEntity<Comunicacion> actualizar(
         @PathVariable Long id,

@@ -1,0 +1,27 @@
+$kind: http-request
+url: http://localhost:8080/api/oportunidades
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"titulo\": \"Oportunidad Semana 14\",\r
+
+    \  \"descripcion\": \"Registro de prueba para la entrega de API REST\",\r
+
+    \  \"estado\": \"Nueva\",\r
+
+    \  \"prioridad\": \"Alta\",\r
+
+    \  \"fechaCreacion\": \"2026-11-11\",\r
+
+    \  \"fechaSeguimiento\": \"2026-11-20\",\r
+
+    \  \"contacto\": {\r
+
+    \    \"id\": 2\r
+
+    \  }\r
+
+    }"
+order: 11000

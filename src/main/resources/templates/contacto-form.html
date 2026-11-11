@@ -5,103 +5,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title th:text="${contacto.id == null ? 'Nuevo Contacto' : 'Editar Contacto'}">
-        Contacto - Mini CRM Académico
+    <title th:text="${contacto.id == null ? 'Nuevo contacto' : 'Editar contacto'}">
+        Contactos - Mini CRM Académico
     </title>
+
+    <link rel="stylesheet" th:href="@{/css/contacto-form.css}">
 </head>
 
 <body>
 
-<h1>Mini CRM Académico</h1>
+<div class="form-contenedor">
 
-<h2 th:text="${contacto.id == null ? 'Registrar Nuevo Contacto' : 'Editar Contacto'}">
-    Contacto
-</h2>
+    <header class="form-encabezado">
+        <div>
+            <span class="form-etiqueta">MINI CRM ACADÉMICO</span>
+            <h1>Gestión de contactos</h1>
+            <p>Administra la información de tus contactos académicos.</p>
+        </div>
 
-<form th:action="${contacto.id == null ? '/contactos/guardar' : '/contactos/actualizar'}"
-      th:object="${contacto}"
-      method="post">
+        <a class="boton boton-secundario" th:href="@{/contactos}">
+            ← Volver al listado
+        </a>
+    </header>
 
-    <input type="hidden" th:field="*{id}">
+    <main class="form-panel">
 
-    <div>
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" th:field="*{nombre}">
+        <div class="form-titulo">
+            <div class="form-icono">👤</div>
+            <div>
+                <h2 th:text="${contacto.id == null ? 'Registrar nuevo contacto' : 'Editar contacto'}">
+                    Registrar nuevo contacto
+                </h2>
+                <p>
+                    Ingresa los datos solicitados para guardar la información.
+                </p>
+            </div>
+        </div>
 
-        <p th:if="${#fields.hasErrors('nombre')}"
-           th:errors="*{nombre}">
-        </p>
-    </div>
+        <div class="form-separador"></div>
 
-    <br>
+        <form id="formularioContacto"
+              th:action="@{/contactos/guardar}"
+              th:object="${contacto}"
+              method="post">
 
-    <div>
-        <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" th:field="*{apellido}">
+            <input type="hidden" th:field="*{id}">
 
-        <p th:if="${#fields.hasErrors('apellido')}"
-           th:errors="*{apellido}">
-        </p>
-    </div>
+            <div class="form-grid">
 
-    <br>
+                <div class="campo">
+                    <label for="nombre">Nombre <span>*</span></label>
+                    <input type="text"
+                           id="nombre"
+                           th:field="*{nombre}"
+                           required
+                           maxlength="100"
+                           autocomplete="given-name"
+                           placeholder="Ej. Stiven">
+                    <p class="error-campo"
+                       th:if="${#fields.hasErrors('nombre')}"
+                       th:errors="*{nombre}"></p>
+                </div>
 
-    <div>
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" th:field="*{email}">
+                <div class="campo">
+                    <label for="apellido">Apellido <span>*</span></label>
+                    <input type="text"
+                           id="apellido"
+                           th:field="*{apellido}"
+                           required
+                           maxlength="100"
+                           autocomplete="family-name"
+                           placeholder="Ej. Palacio">
+                    <p class="error-campo"
+                       th:if="${#fields.hasErrors('apellido')}"
+                       th:errors="*{apellido}"></p>
+                </div>
 
-        <p th:if="${#fields.hasErrors('email')}"
-           th:errors="*{email}">
-        </p>
-    </div>
+                <div class="campo campo-completo">
+                    <label for="email">Correo electrónico <span>*</span></label>
+                    <input type="email"
+                           id="email"
+                           th:field="*{email}"
+                           required
+                           maxlength="150"
+                           autocomplete="email"
+                           placeholder="ejemplo@correo.com">
+                    <p class="error-campo"
+                       th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}"></p>
+                </div>
 
-    <br>
+                <div class="campo">
+                    <label for="telefono">Teléfono <span>*</span></label>
+                    <input type="tel"
+                           id="telefono"
+                           th:field="*{telefono}"
+                           required
+                           maxlength="30"
+                           autocomplete="tel"
+                           placeholder="Ej. 3001234567">
+                    <p class="error-campo"
+                       th:if="${#fields.hasErrors('telefono')}"
+                       th:errors="*{telefono}"></p>
+                </div>
 
-    <div>
-        <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" th:field="*{telefono}">
+                <div class="campo">
+                    <label for="estado">Estado <span>*</span></label>
+                    <input type="text"
+                           id="estado"
+                           th:field="*{estado}"
+                           required
+                           maxlength="30"
+                           placeholder="Ej. ACTIVO">
+                    <p class="error-campo"
+                       th:if="${#fields.hasErrors('estado')}"
+                       th:errors="*{estado}"></p>
+                </div>
 
-        <p th:if="${#fields.hasErrors('telefono')}"
-           th:errors="*{telefono}">
-        </p>
-    </div>
+                <div class="campo campo-completo">
+                    <label for="programa">Programa académico <span>*</span></label>
+                    <input type="text"
+                           id="programa"
+                           th:field="*{programa}"
+                           required
+                           maxlength="150"
+                           placeholder="Ej. Tecnología en Desarrollo de Software">
+                    <p class="error-campo"
+                       th:if="${#fields.hasErrors('programa')}"
+                       th:errors="*{programa}"></p>
+                </div>
 
-    <br>
+            </div>
 
-    <div>
-        <label for="programa">Programa:</label>
-        <input type="text" id="programa" th:field="*{programa}">
+            <p class="form-ayuda">
+                <span>*</span> Todos los campos son obligatorios.
+            </p>
 
-        <p th:if="${#fields.hasErrors('programa')}"
-           th:errors="*{programa}">
-        </p>
-    </div>
+            <div class="form-acciones">
 
-    <br>
+                <a class="boton boton-secundario" th:href="@{/contactos}">
+                    Cancelar
+                </a>
 
-    <div>
-        <label for="estado">Estado:</label>
-        <input type="text" id="estado" th:field="*{estado}">
+                <button type="submit" class="boton boton-principal"
+                        th:text="${contacto.id == null ? 'Guardar contacto' : 'Actualizar contacto'}">
+                    Guardar contacto
+                </button>
 
-        <p th:if="${#fields.hasErrors('estado')}"
-           th:errors="*{estado}">
-        </p>
-    </div>
+            </div>
 
-    <br>
+        </form>
 
-    <button type="submit"
-            th:text="${contacto.id == null ? 'Guardar Contacto' : 'Actualizar Contacto'}">
-        Guardar
-    </button>
+    </main>
 
-</form>
+    <footer class="form-footer">
+        Mini CRM Académico · Gestión de información de contactos
+    </footer>
 
-<br>
-
-<a href="/contactos">
-    Volver al listado
-</a>
+</div>
 
 </body>
 

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Formulario de oportunidades | Mini CRM Académico</title>
+
+    <link rel="stylesheet" th:href="@{/css/oportunidad-form.css}">
+</head>
+
+<body>
+    <header class="encabezado">
+
+        <h1>Mini CRM Académico</h1>
+        <p>Gestión de oportunidades académicas</p>
+
+        <nav class="navegacion">
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/contactos}">Contactos</a></li>
+                <li><a th:href="@{/oportunidades}">Oportunidades</a></li>
+                <li><a th:href="@{/comunicaciones}">Comunicaciones</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenedor">
+
+        <h2>Registrar oportunidad</h2>
+
+        <p class="descripcion">
+            Completa la información para registrar una nueva oportunidad académica.
+        </p>
+
+        <!-- FORMULARIO -->
+        <form id="formOportunidad"
+              th:action="@{/oportunidades/guardar}"
+              th:object="${oportunidad}"
+              method="post">
+
+            <!-- ERRORES GENERALES -->
+            <div class="mensaje-error"
+                 th:if="${#fields.hasGlobalErrors()}">
+
+                <p th:each="err : ${#fields.globalErrors()}"
+                   th:text="${err}">
+                </p>
+
+            </div>
+
+            <!-- TÍTULO -->
+            <div class="grupo-formulario">
+
+                <label for="titulo">Título de la oportunidad:</label>
+
+                <input type="text"
+                       id="titulo"
+                       th:field="*{titulo}"
+                       placeholder="Ingrese el título"
+                       required>
+
+                <small class="mensaje-error"
+                       th:if="${#fields.hasErrors('titulo')}"
+                       th:errors="*{titulo}">
+                </small>
+
+            </div>
+
+            <!-- DESCRIPCIÓN -->
+            <div class="grupo-formulario">
+
+                <label for="descripcion">Descripción:</label>
+
+                <textarea id="descripcion"
+                          th:field="*{descripcion}"
+                          placeholder="Describa la oportunidad"
+                          rows="4"
+                          required></textarea>
+
+                <small class="mensaje-error"
+                       th:if="${#fields.hasErrors('descripcion')}"
+                       th:errors="*{descripcion}">
+                </small>
+
+            </div>
+
+            <!-- ESTADO -->
+            <div class="grupo-formulario">
+
+                <label for="estado">Estado:</label>
+
+                <select id="estado"
+                        th:field="*{estado}"
+                        required>
+
+                    <option value="">Seleccione un estado</option>
+                    <option value="ABIERTA">Abierta</option>
+                    <option value="EN_PROCESO">En proceso</option>
+                    <option value="GANADA">Ganada</option>
+                    <option value="PERDIDA">Perdida</option>
+
+                </select>
+
+                <small class="mensaje-error"
+                       th:if="${#fields.hasErrors('estado')}"
+                       th:errors="*{estado}">
+                </small>
+
+            </div>
+
+            <!-- PRIORIDAD -->
+            <div class="grupo-formulario">
+
+                <label for="prioridad">Prioridad:</label>
+
+                <select id="prioridad"
+                        th:field="*{prioridad}"
+                        required>
+
+                    <option value="">Seleccione una prioridad</option>
+                    <option value="BAJA">Baja</option>
+                    <option value="MEDIA">Media</option>
+                    <option value="ALTA">Alta</option>
+
+                </select>
+
+                <small class="mensaje-error"
+                       th:if="${#fields.hasErrors('prioridad')}"
+                       th:errors="*{prioridad}">
+                </small>
+
+            </div>
+
+            <!-- CONTACTO -->
+            <div class="grupo-formulario">
+
+                <label for="contacto">Contacto relacionado:</label>
+
+                <select id="contacto"
+                        th:field="*{contacto.id}"
+                        required>
+
+                    <option value="">Seleccione un contacto</option>
+
+                    <option th:each="contacto : ${contactos}"
+                            th:value="${contacto.id}"
+                            th:text="${contacto.nombre + ' ' + contacto.apellido}">
+                    </option>
+
+                </select>
+
+                <small class="mensaje-error"
+                       th:if="${#fields.hasErrors('contacto')}"
+                       th:errors="*{contacto}">
+                </small>
+
+            </div>
+
+            <!-- FECHA DE CREACIÓN -->
+            <div class="grupo-formulario">
+
+                <label for="fechaCreacion">Fecha de creación:</label>
+
+                <input type="date"
+                       id="fechaCreacion"
+                       th:field="*{fechaCreacion}"
+                       required>
+
+                <small class="mensaje-error"
+                       th:if="${#fields.hasErrors('fechaCreacion')}"
+                       th:errors="*{fechaCreacion}">
+                </small>
+
+            </div>
+
+            <!-- FECHA DE SEGUIMIENTO -->
+            <div class="grupo-formulario">
+
+                <label for="fechaSeguimiento">Fecha de seguimiento:</label>
+
+                <input type="date"
+                       id="fechaSeguimiento"
+                       th:field="*{fechaSeguimiento}"
+                       required>
+
+                <small class="mensaje-error"
+                       th:if="${#fields.hasErrors('fechaSeguimiento')}"
+                       th:errors="*{fechaSeguimiento}">
+                </small>
+
+            </div>
+
+            <!-- BOTONES -->
+            <div class="acciones-formulario">
+
+                <button type="submit">
+                    Guardar oportunidad
+                </button>
+
+                <a th:href="@{/oportunidades}">
+                    Volver al listado
+                </a>
+
+            </div>
+
+        </form>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="pie-pagina">
+        <p>Mini CRM Académico - Gestión de contactos y oportunidades</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script th:src="@{/js/oportunidad-form.js}" defer></script>
+
+</body>
+</html>

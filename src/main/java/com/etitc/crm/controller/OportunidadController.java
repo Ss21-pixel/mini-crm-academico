@@ -52,30 +52,30 @@ public class OportunidadController {
     // =========================
 
     @PostMapping
-    public ResponseEntity<Oportunidad> crear(
+   public ResponseEntity<Oportunidad> crear(
         @Valid @RequestBody Oportunidad oportunidad) {
 
-        if (oportunidad.getContacto() != null &&
-                oportunidad.getContacto().getId() != null) {
+    if (oportunidad.getContacto() != null &&
+            oportunidad.getContacto().getId() != null) {
 
-            Long contactoId = oportunidad.getContacto().getId();
+        Long contactoId = oportunidad.getContacto().getId();
 
-            Contacto contacto = contactoService
-                    .buscarPorId(contactoId)
-                    .orElse(null);
+        Contacto contacto = contactoService
+                .buscarPorId(contactoId)
+                .orElse(null);
 
-            if (contacto == null) {
-                return ResponseEntity.badRequest().build();
-            }
-
-            oportunidad.setContacto(contacto);
+        if (contacto == null) {
+            return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(
-                oportunidadService.guardar(oportunidad)
-        );
+        oportunidad.setContacto(contacto);
     }
 
+    Oportunidad nuevaOportunidad =
+            oportunidadService.guardar(oportunidad);
+
+    return ResponseEntity.status(201).body(nuevaOportunidad);
+}
     // =========================
     // ACTUALIZAR OPORTUNIDAD
     // =========================

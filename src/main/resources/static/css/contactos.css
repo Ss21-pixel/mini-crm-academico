@@ -1,0 +1,608 @@
+
+/* =========================================
+   MINI CRM ACADEMICO - CONTACTOS
+   Diseño unificado con Oportunidades
+   ========================================= */
+
+   * {
+    box-sizing: border-box;
+}
+
+:root {
+    --contactos-principal: #1769aa;
+    --contactos-hover: #104e83;
+    --contactos-azul-oscuro: #17365d;
+    --contactos-fondo: #f3f6fb;
+    --contactos-texto: #263445;
+    --contactos-secundario: #65758b;
+    --contactos-borde: #dce5ef;
+    --contactos-blanco: #ffffff;
+    --contactos-error: #b42318;
+}
+
+body {
+    margin: 0;
+    padding: 30px 20px;
+    background: var(--contactos-fondo);
+    color: var(--contactos-texto);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.contactos-contenedor {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* ENCABEZADO */
+
+.contactos-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    max-width: 1500px;
+    margin: 0 auto 25px;
+}
+
+.contactos-encabezado h1 {
+    margin: 0 0 7px;
+    color: var(--contactos-azul-oscuro);
+    font-size: 30px;
+}
+
+.contactos-subtitulo {
+    margin: 0;
+    color: var(--contactos-secundario);
+    font-size: 15px;
+}
+
+/* NAVEGACIÓN */
+
+.contactos-encabezado nav {
+    order: 3;
+    width: 100%;
+}
+
+.contactos-encabezado nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    list-style: none;
+    padding: 12px 15px;
+    margin: 0;
+    background: var(--contactos-azul-oscuro);
+    border-radius: 8px;
+}
+
+.contactos-encabezado nav li {
+    margin: 0;
+}
+
+.contactos-encabezado nav a {
+    display: block;
+    padding: 9px 15px;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s;
+}
+
+.contactos-encabezado nav a:hover,
+.contactos-encabezado nav a.activo {
+    background: var(--contactos-principal);
+}
+
+/* BOTONES */
+
+.contactos-boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.contactos-boton-principal {
+    background: var(--contactos-principal);
+    color: white;
+}
+
+.contactos-boton-principal:hover {
+    background: var(--contactos-hover);
+}
+
+.contactos-boton-secundario {
+    background: #e5eaf0;
+    color: var(--contactos-texto);
+}
+
+.contactos-boton-secundario:hover {
+    background: #d5dce5;
+}
+
+.contactos-boton-editar {
+    background: #eaf2fb;
+    color: #174f83;
+}
+
+.contactos-boton-editar:hover {
+    background: #d5e7fa;
+}
+
+.contactos-boton-eliminar {
+    background: #feeceb;
+    color: #b42318;
+}
+
+.contactos-boton-eliminar:hover {
+    background: #fbd5d2;
+}
+
+/* MENSAJES */
+
+.contactos-mensaje,
+.contactos-error-general {
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.contactos-mensaje {
+    border: 1px solid #a5d6a7;
+    background: #e8f5e9;
+    color: #256029;
+}
+
+.contactos-error-general {
+    border: 1px solid #f0b8b8;
+    background: #fff0f0;
+    color: var(--contactos-error);
+}
+
+/* PANEL */
+
+.contactos-panel {
+    margin-bottom: 20px;
+    padding: 25px 20px;
+    border: 1px solid var(--contactos-borde);
+    border-radius: 12px;
+    background: var(--contactos-blanco);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+}
+
+.contactos-panel-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.contactos-panel h2 {
+    margin: 0;
+    color: var(--contactos-azul-oscuro);
+    font-size: 21px;
+}
+
+.contactos-contador {
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #eaf2fb;
+    color: #174f83;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* BUSCADOR */
+
+.contactos-busqueda {
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.contactos-busqueda-campo {
+    flex: 1;
+    min-width: 220px;
+    max-width: 480px;
+}
+
+.contactos-busqueda label,
+.contactos-campo label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.contactos-busqueda input,
+.contactos-campo input,
+.contactos-campo select,
+.contactos-campo textarea {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #bdc8d5;
+    border-radius: 7px;
+    background: white;
+    color: var(--contactos-texto);
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.contactos-campo textarea {
+    min-height: 105px;
+    resize: vertical;
+}
+
+.contactos-busqueda input:focus,
+.contactos-campo input:focus,
+.contactos-campo select:focus,
+.contactos-campo textarea:focus {
+    outline: none;
+    border-color: var(--contactos-principal);
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, .12);
+}
+
+/* TABLA */
+
+.contactos-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.contactos-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.contactos-tabla thead {
+    background: var(--contactos-azul-oscuro);
+    color: white;
+}
+
+.contactos-tabla th,
+.contactos-tabla td {
+    padding: 13px 10px;
+    border-bottom: 1px solid var(--contactos-borde);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.contactos-tabla th {
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.contactos-tabla tbody tr:hover {
+    background: #f6f9fd;
+}
+
+.contactos-tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ESTADOS */
+
+.contactos-estado {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #e5f6eb;
+    color: #237a42;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* ACCIONES */
+
+.contactos-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.formulario-eliminar-contacto {
+    margin: 0;
+}
+
+/* TABLA VACÍA */
+
+.contactos-sin-registros {
+    padding: 30px 15px !important;
+    color: var(--contactos-secundario);
+    text-align: center !important;
+}
+
+/* FORMULARIO */
+
+.contactos-formulario {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.contactos-formulario .contactos-campo {
+    margin-bottom: 20px;
+}
+
+.contactos-ayuda {
+    margin-top: 5px;
+    color: var(--contactos-secundario);
+    font-size: 12px;
+}
+
+.contactos-error-campo {
+    margin: 6px 0 0;
+    color: var(--contactos-error);
+    font-size: 13px;
+}
+
+.contactos-formulario-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* PAGINACIÓN */
+
+.contactos-paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.contactos-paginacion-info {
+    color: var(--contactos-secundario);
+    font-size: 12px;
+}
+
+/* PIE DE PÁGINA */
+
+.pie {
+    margin-top: 25px;
+    padding-top: 15px;
+}
+
+.enlace-inicio {
+    color: var(--contactos-principal);
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.enlace-inicio:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .contactos-encabezado h1 {
+        font-size: 25px;
+    }
+
+    .contactos-encabezado nav ul {
+        justify-content: flex-start;
+        gap: 5px;
+    }
+
+    .contactos-encabezado nav a {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .contactos-panel {
+        padding: 17px 13px;
+    }
+
+    .contactos-tabla {
+        min-width: 1100px;
+    }
+
+    .contactos-formulario-acciones {
+        flex-direction: column;
+    }
+
+    .contactos-formulario-acciones .contactos-boton {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .contactos-encabezado h1 {
+        font-size: 22px;
+    }
+
+    .contactos-encabezado > .contactos-boton {
+        width: 100%;
+    }
+
+    .contactos-busqueda {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .contactos-busqueda-campo {
+        max-width: 100%;
+    }
+
+    .contactos-boton {
+        width: 100%;
+    }
+
+    .contactos-acciones {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}
+/* =====================================
+   NAVEGACIÓN UNIFICADA
+   ===================================== */
+
+   .contactos-navegacion {
+    width: 100%;
+    padding: 5px 12px;
+    border-radius: 9px;
+    background: #17365d;
+}
+
+.contactos-navegacion ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    list-style: none;
+}
+
+.contactos-navegacion a {
+    display: block;
+    padding: 10px 17px;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.contactos-navegacion a:hover {
+    background: #28517d;
+}
+
+.contactos-navegacion a.activo {
+    background: #1769aa;
+}
+
+/* =====================================
+   BOTÓN DE REGISTRAR CONTACTO
+   ===================================== */
+
+.contactos-panel-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.contactos-panel-encabezado h2 {
+    margin-bottom: 8px;
+}
+
+.contactos-panel-encabezado .contactos-boton {
+    min-height: 42px;
+}
+
+@media (max-width: 700px) {
+    .contactos-panel-encabezado {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .contactos-panel-encabezado .contactos-boton {
+        width: 100%;
+    }
+
+    .contactos-navegacion a {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+}
+/* Navegación con el mismo estilo de Oportunidades */
+
+.contactos-navegacion {
+    width: 100%;
+    padding: 5px 12px;
+    border-radius: 9px;
+    background: #17365d;
+}
+
+.contactos-navegacion ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    list-style: none;
+}
+
+.contactos-navegacion a {
+    display: block;
+    padding: 10px 17px;
+    border-radius: 6px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.contactos-navegacion a:hover {
+    background: #28517d;
+}
+
+.contactos-navegacion a.activo {
+    background: #1769aa;
+}
+
+.contactos-panel-encabezado {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.contactos-panel-encabezado h2 {
+    margin-bottom: 8px;
+}
+
+@media (max-width: 700px) {
+    .contactos-navegacion a {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+
+    .contactos-panel-encabezado {
+        align-items: stretch;
+    }
+}

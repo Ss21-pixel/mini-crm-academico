@@ -1,0 +1,570 @@
+/* =========================================
+   MINI CRM ACADEMICO - COMUNICACIONES
+   Diseño unificado con Contactos y Oportunidades
+   ========================================= */
+
+:root {
+    --principal: #1769aa;
+    --hover: #104e83;
+    --oscuro: #17365d;
+    --fondo: #f3f6fb;
+    --texto: #263445;
+    --secundario: #65758b;
+    --borde: #dce5ef;
+    --blanco: #ffffff;
+    --error: #b42318;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    padding: 30px 20px;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+.comunicaciones-contenedor {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* ENCABEZADO */
+
+.comunicaciones-encabezado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.comunicaciones-etiqueta {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: var(--principal);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.comunicaciones-encabezado h1 {
+    margin-bottom: 6px;
+    color: var(--oscuro);
+    font-size: 28px;
+}
+
+.comunicaciones-subtitulo {
+    color: var(--secundario);
+    font-size: 14px;
+}
+
+.comunicaciones-descripcion {
+    margin-top: 6px;
+    color: var(--secundario);
+    font-size: 13px;
+}
+
+/* NAVEGACIÓN */
+
+.comunicaciones-navegacion {
+    width: 100%;
+    padding: 5px 12px;
+    border-radius: 9px;
+    background: var(--oscuro);
+}
+
+.comunicaciones-navegacion ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    list-style: none;
+}
+
+.comunicaciones-navegacion a {
+    display: block;
+    padding: 10px 17px;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.comunicaciones-navegacion a:hover {
+    background: #28517d;
+}
+
+.comunicaciones-navegacion a.activo {
+    background: var(--principal);
+}
+
+/* BOTONES */
+
+.comunicaciones-boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.comunicaciones-boton:hover {
+    transform: translateY(-1px);
+}
+
+.comunicaciones-boton:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
+}
+
+.comunicaciones-boton-principal {
+    background: var(--principal);
+    color: #ffffff;
+}
+
+.comunicaciones-boton-principal:hover {
+    background: var(--hover);
+}
+
+.comunicaciones-boton-secundario {
+    border: 1px solid var(--borde);
+    background: #edf2f7;
+    color: var(--oscuro);
+}
+
+.comunicaciones-boton-secundario:hover {
+    background: #e1e9f2;
+}
+
+.comunicaciones-boton-editar {
+    background: #eaf2fb;
+    color: #174f83;
+}
+
+.comunicaciones-boton-editar:hover {
+    background: #d5e7fa;
+}
+
+.comunicaciones-boton-eliminar {
+    background: #feeceb;
+    color: var(--error);
+}
+
+.comunicaciones-boton-eliminar:hover {
+    background: #fbd5d2;
+}
+
+/* MENSAJES */
+
+.comunicaciones-error,
+.comunicaciones-exito {
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.comunicaciones-error {
+    border: 1px solid #f0b8b8;
+    background: #fff0f0;
+    color: var(--error);
+}
+
+.comunicaciones-exito {
+    border: 1px solid #a5d6a7;
+    background: #e8f5e9;
+    color: #256029;
+}
+
+/* PANELES */
+
+.comunicaciones-panel {
+    padding: 25px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--blanco);
+    box-shadow: 0 4px 16px rgba(23, 54, 93, 0.05);
+}
+
+.comunicaciones-panel-encabezado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.comunicaciones-panel h2 {
+    color: var(--oscuro);
+    font-size: 21px;
+}
+
+.comunicaciones-contador {
+    padding: 7px 13px;
+    border-radius: 20px;
+    background: #eaf2fb;
+    color: #174f83;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* BUSCADOR */
+
+.comunicaciones-buscador {
+    max-width: 550px;
+    margin-bottom: 22px;
+}
+
+.comunicaciones-buscador label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.comunicaciones-buscador input {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 14px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: #ffffff;
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.comunicaciones-buscador input:focus {
+    border-color: var(--principal);
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+}
+
+/* TABLA */
+
+.comunicaciones-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+}
+
+.comunicaciones-tabla {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+    background: var(--blanco);
+    font-size: 13px;
+}
+
+.comunicaciones-tabla thead {
+    background: var(--oscuro);
+    color: #ffffff;
+}
+
+.comunicaciones-tabla th {
+    padding: 14px 12px;
+    font-size: 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.comunicaciones-tabla td {
+    padding: 13px 12px;
+    border-bottom: 1px solid var(--borde);
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
+
+.comunicaciones-tabla tbody tr:hover {
+    background: #f6f9fd;
+}
+
+.comunicaciones-tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.comunicaciones-tipo {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #eaf2fb;
+    color: #174f83;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.comunicaciones-mensaje-celda {
+    min-width: 220px;
+    max-width: 360px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.comunicaciones-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 8px;
+}
+
+.comunicaciones-acciones .comunicaciones-boton {
+    min-height: 34px;
+    padding: 7px 11px;
+    font-size: 12px;
+}
+
+.comunicaciones-sin-registros {
+    padding: 30px 15px !important;
+    color: var(--secundario);
+    text-align: center;
+}
+
+/* FORMULARIO */
+
+.comunicaciones-formulario {
+    max-width: 950px;
+    margin: 25px auto 0;
+}
+
+.comunicaciones-formulario-encabezado {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.comunicaciones-formulario-encabezado h2 {
+    margin-bottom: 5px;
+}
+
+.comunicaciones-formulario-icono {
+    display: flex;
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #eaf3fc;
+    color: var(--principal);
+    font-size: 26px;
+}
+
+.comunicaciones-separador {
+    height: 1px;
+    margin: 25px 0;
+    background: var(--borde);
+}
+
+.comunicaciones-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.comunicaciones-campo {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+}
+
+.comunicaciones-campo-completo {
+    grid-column: 1 / -1;
+}
+
+.comunicaciones-campo label {
+    margin-bottom: 9px;
+    color: var(--texto);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.comunicaciones-campo label span,
+.comunicaciones-obligatorios span {
+    color: var(--error);
+}
+
+.comunicaciones-campo input,
+.comunicaciones-campo select,
+.comunicaciones-campo textarea {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 14px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: #ffffff;
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.comunicaciones-campo input:focus,
+.comunicaciones-campo select:focus,
+.comunicaciones-campo textarea:focus {
+    border-color: var(--principal);
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+}
+
+.comunicaciones-campo input::placeholder,
+.comunicaciones-campo textarea::placeholder {
+    color: #9aa8b8;
+}
+
+.comunicaciones-campo textarea {
+    min-height: 125px;
+    resize: vertical;
+}
+
+.comunicaciones-ayuda {
+    margin-top: 7px;
+    color: var(--secundario);
+    font-size: 12px;
+}
+
+.comunicaciones-obligatorios {
+    margin-top: 24px;
+}
+
+.comunicaciones-formulario-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid var(--borde);
+}
+
+/* PIE DE PÁGINA */
+
+.comunicaciones-pie {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 25px;
+    padding: 15px 5px;
+    color: var(--secundario);
+    font-size: 12px;
+}
+
+.comunicaciones-enlace-inicio {
+    color: var(--principal);
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.comunicaciones-enlace-inicio:hover {
+    text-decoration: underline;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 750px) {
+
+    body {
+        padding: 20px 12px;
+    }
+
+    .comunicaciones-encabezado {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .comunicaciones-encabezado h1 {
+        font-size: 24px;
+    }
+
+    .comunicaciones-navegacion {
+        padding: 7px;
+    }
+
+    .comunicaciones-navegacion ul {
+        gap: 3px;
+    }
+
+    .comunicaciones-navegacion a {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+
+    .comunicaciones-encabezado > .comunicaciones-boton {
+        width: 100%;
+    }
+
+    .comunicaciones-panel {
+        padding: 20px 15px;
+    }
+
+    .comunicaciones-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .comunicaciones-campo-completo {
+        grid-column: auto;
+    }
+
+    .comunicaciones-formulario-acciones {
+        flex-direction: column-reverse;
+    }
+
+    .comunicaciones-formulario-acciones .comunicaciones-boton {
+        width: 100%;
+    }
+
+    .comunicaciones-pie {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .comunicaciones-panel-encabezado {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .comunicaciones-formulario-encabezado {
+        align-items: flex-start;
+    }
+
+    .comunicaciones-tabla {
+        min-width: 950px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}

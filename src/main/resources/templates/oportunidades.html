@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oportunidades | Mini CRM Académico</title>
+
+    <link rel="stylesheet" th:href="@{/css/oportunidades.css}">
+</head>
+<body>
+
+<header class="oportunidades-encabezado">
+    <div class="oportunidades-contenedor">
+        <h1>Mini CRM Académico</h1>
+        <p class="oportunidades-subtitulo">
+            Administración y seguimiento de oportunidades
+        </p>
+
+        <nav class="navegacion">
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/contactos}">Contactos</a></li>
+                <li><a th:href="@{/oportunidades}" class="activo">Oportunidades</a></li>
+                <li><a th:href="@{/comunicaciones}">Comunicaciones</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="oportunidades-contenedor">
+
+    <div id="mensaje" class="oportunidades-mensaje" hidden></div>
+
+    <section class="oportunidades-panel">
+
+        <div class="oportunidades-panel-encabezado">
+            <h2>Lista de oportunidades</h2>
+            <span class="oportunidades-contador">
+                Total: <strong id="totalOportunidades">0</strong>
+            </span>
+        </div>
+
+        <div class="oportunidades-acciones">
+            <button type="button"
+                    id="btnNuevaOportunidad"
+                    class="oportunidades-boton oportunidades-boton-principal">
+                + Nueva oportunidad
+            </button>
+        </div>
+
+        <div class="oportunidades-busqueda">
+            <div class="oportunidades-busqueda-campo">
+                <label for="buscarOportunidad">Buscar oportunidad</label>
+                <input type="search"
+                       id="buscarOportunidad"
+                       placeholder="Título, descripción o contacto...">
+            </div>
+
+            <button type="button"
+                    id="btnBuscar"
+                    class="oportunidades-boton oportunidades-boton-buscar">
+                Buscar
+            </button>
+
+            <button type="button"
+                    id="btnLimpiar"
+                    class="oportunidades-boton oportunidades-boton-secundario">
+                Limpiar
+            </button>
+        </div>
+
+        <div class="oportunidades-tabla-contenedor">
+            <table class="oportunidades-tabla">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Prioridad</th>
+                    <th>Contacto</th>
+                    <th>Fecha creación</th>
+                    <th>Seguimiento</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+
+                <tbody id="tablaOportunidades">
+                <tr>
+                    <td colspan="9" class="oportunidades-sin-registros">
+                        Cargando oportunidades...
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="oportunidades-paginacion">
+            <span id="paginaInfo">Página 1</span>
+            <button type="button" id="btnAnterior"
+                    class="oportunidades-boton oportunidades-boton-principal">
+                Anterior
+            </button>
+            <button type="button" id="btnSiguiente"
+                    class="oportunidades-boton oportunidades-boton-principal">
+                Siguiente
+            </button>
+        </div>
+
+    </section>
+
+    <!-- FORMULARIO -->
+    <section class="oportunidades-panel formulario-panel" id="panelFormulario" hidden>
+
+        <div class="oportunidades-panel-encabezado">
+            <h2 id="tituloFormulario">Registrar oportunidad</h2>
+        </div>
+
+        <form id="formOportunidad">
+
+            <input type="hidden" id="oportunidadId">
+
+            <div class="oportunidades-formulario-grid">
+
+                <div class="oportunidades-campo">
+                    <label for="titulo">Título *</label>
+                    <input type="text" id="titulo" maxlength="100" required>
+                </div>
+
+                <div class="oportunidades-campo">
+                    <label for="estado">Estado *</label>
+                    <select id="estado" required>
+                        <option value="">Seleccione un estado</option>
+                        <option value="ABIERTA">Abierta</option>
+                        <option value="EN_PROCESO">En proceso</option>
+                        <option value="GANADA">Ganada</option>
+                        <option value="PERDIDA">Perdida</option>
+                    </select>
+                </div>
+
+                <div class="oportunidades-campo">
+                    <label for="prioridad">Prioridad *</label>
+                    <select id="prioridad" required>
+                        <option value="">Seleccione prioridad</option>
+                        <option value="ALTA">Alta</option>
+                        <option value="MEDIA">Media</option>
+                        <option value="BAJA">Baja</option>
+                    </select>
+                </div>
+
+                <div class="oportunidades-campo">
+                    <label for="contacto">Contacto *</label>
+                    <select id="contacto" required>
+                        <option value="">Seleccione un contacto</option>
+                    </select>
+                </div>
+
+                <div class="oportunidades-campo">
+                    <label for="fechaCreacion">Fecha de creación *</label>
+                    <input type="date" id="fechaCreacion" required>
+                </div>
+
+                <div class="oportunidades-campo">
+                    <label for="fechaSeguimiento">Fecha de seguimiento *</label>
+                    <input type="date" id="fechaSeguimiento" required>
+                </div>
+
+                <div class="oportunidades-campo campo-completo">
+                    <label for="descripcion">Descripción *</label>
+                    <textarea id="descripcion"
+                              maxlength="500"
+                              rows="4"
+                              required></textarea>
+                </div>
+
+            </div>
+
+            <div class="oportunidades-formulario-botones">
+                <button type="submit"
+                        class="oportunidades-boton oportunidades-boton-principal">
+                    Guardar oportunidad
+                </button>
+
+                <button type="button"
+                        id="btnCancelar"
+                        class="oportunidades-boton oportunidades-boton-secundario">
+                    Cancelar
+                </button>
+            </div>
+
+        </form>
+    </section>
+
+</main>
+
+<footer class="oportunidades-pie">
+    <p>Mini CRM Académico | Gestión de oportunidades</p>
+    <p>Tecnología en Desarrollo de Software</p>
+</footer>
+
+<script th:src="@{/js/oportunidades.js}"></script>
+</body>
+</html>

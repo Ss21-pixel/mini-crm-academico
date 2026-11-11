@@ -1,0 +1,7 @@
+$kind: http-request
+url: http://localhost:8080/api/comunicaciones
+method: GET
+body:
+  type: json
+  content: ""
+order: 15000

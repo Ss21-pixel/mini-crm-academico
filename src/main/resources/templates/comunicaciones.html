@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Comunicaciones - Mini CRM Académico</title>
+
+    <link rel="stylesheet" th:href="@{/css/comunicaciones.css}">
+    <script th:src="@{/js/comunicaciones.js}" defer></script>
+</head>
+
+<body>
+
+<header class="comunicaciones-encabezado">
+    <div class="comunicaciones-contenedor">
+
+        <h1>Mini CRM Académico</h1>
+
+        <p class="comunicaciones-subtitulo">
+            Administración y seguimiento de comunicaciones
+        </p>
+
+        <nav class="navegacion">
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/contactos}">Contactos</a></li>
+                <li><a th:href="@{/oportunidades}">Oportunidades</a></li>
+                <li>
+                    <a th:href="@{/comunicaciones}" class="activo">
+                        Comunicaciones
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<main class="comunicaciones-contenedor">
+
+    <div id="mensajeEstado"
+         class="comunicaciones-mensaje"
+         hidden>
+    </div>
+
+    <section class="comunicaciones-panel">
+
+        <div class="comunicaciones-panel-encabezado">
+
+            <div>
+                <h2>Historial de comunicaciones</h2>
+
+                <p class="comunicaciones-descripcion">
+                    Consulta, busca y administra las comunicaciones registradas.
+                </p>
+            </div>
+
+            <span class="comunicaciones-contador">
+                Total: <strong id="contadorComunicaciones">0</strong>
+            </span>
+
+        </div>
+
+        <div class="comunicaciones-acciones">
+            <a href="#seccionFormulario"
+               class="comunicaciones-boton comunicaciones-boton-principal">
+                + Nueva comunicación
+            </a>
+        </div>
+
+        <div class="comunicaciones-buscador">
+
+            <label for="buscadorComunicaciones">
+                Buscar comunicación
+            </label>
+
+            <input type="search"
+                   id="buscadorComunicaciones"
+                   placeholder="Buscar por asunto, tipo, mensaje o contacto..."
+                   autocomplete="off">
+
+        </div>
+
+        <div class="comunicaciones-tabla-contenedor">
+
+            <table class="comunicaciones-tabla"
+                   id="tablaComunicaciones">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Asunto</th>
+                    <th>Mensaje</th>
+                    <th>Fecha</th>
+                    <th>Contacto y acciones</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td colspan="6"
+                        class="comunicaciones-sin-registros">
+                        Cargando comunicaciones...
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <section class="comunicaciones-panel comunicaciones-formulario"
+             id="seccionFormulario"
+             aria-labelledby="tituloFormulario">
+
+        <div class="comunicaciones-formulario-encabezado">
+
+            <div class="comunicaciones-formulario-icono">✉</div>
+
+            <div>
+                <h2 id="tituloFormulario">Registrar comunicación</h2>
+
+                <p class="comunicaciones-descripcion">
+                    Completa los campos para registrar una nueva comunicación.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="comunicaciones-separador"></div>
+
+        <form id="formularioComunicacion">
+
+            <input type="hidden" id="comunicacionId" name="id">
+
+            <div class="comunicaciones-grid">
+
+                <div class="comunicaciones-campo">
+                    <label for="tipo">
+                        Tipo de comunicación <span>*</span>
+                    </label>
+
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Selecciona un tipo</option>
+                        <option value="LLAMADA">Llamada</option>
+                        <option value="CORREO">Correo electrónico</option>
+                        <option value="REUNION">Reunión</option>
+                        <option value="MENSAJE">Mensaje</option>
+                        <option value="OTRO">Otro</option>
+                    </select>
+                </div>
+
+                <div class="comunicaciones-campo">
+                    <label for="fecha">
+                        Fecha <span>*</span>
+                    </label>
+
+                    <input type="date"
+                           id="fecha"
+                           name="fecha"
+                           required>
+                </div>
+
+                <div class="comunicaciones-campo comunicaciones-campo-completo">
+                    <label for="asunto">
+                        Asunto <span>*</span>
+                    </label>
+
+                    <input type="text"
+                           id="asunto"
+                           name="asunto"
+                           minlength="2"
+                           maxlength="100"
+                           required
+                           placeholder="Escribe el asunto de la comunicación">
+                </div>
+
+                <div class="comunicaciones-campo comunicaciones-campo-completo">
+                    <label for="mensaje">
+                        Mensaje <span>*</span>
+                    </label>
+
+                    <textarea id="mensaje"
+                              name="mensaje"
+                              minlength="2"
+                              maxlength="500"
+                              required
+                              placeholder="Describe el contenido de la comunicación"></textarea>
+
+                    <p class="comunicaciones-ayuda">
+                        El mensaje debe tener entre 2 y 500 caracteres.
+                    </p>
+                </div>
+
+                <div class="comunicaciones-campo comunicaciones-campo-completo">
+                    <label for="contactoId">
+                        Contacto relacionado <span>*</span>
+                    </label>
+
+                    <select id="contactoId" name="contactoId" required>
+                        <option value="">Cargando contactos...</option>
+                    </select>
+
+                    <p class="comunicaciones-ayuda">
+                        Selecciona un contacto que ya esté registrado en el CRM.
+                    </p>
+                </div>
+
+            </div>
+
+            <p class="comunicaciones-ayuda comunicaciones-obligatorios">
+                <span>*</span> Todos los campos son obligatorios.
+            </p>
+
+            <div class="comunicaciones-formulario-acciones">
+
+                <button type="button"
+                        id="botonCancelar"
+                        class="comunicaciones-boton comunicaciones-boton-secundario"
+                        hidden>
+                    Cancelar edición
+                </button>
+
+                <button type="submit"
+                        id="botonGuardar"
+                        class="comunicaciones-boton comunicaciones-boton-principal">
+                    Guardar comunicación
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+<footer class="comunicaciones-pie">
+    Mini CRM Académico · Gestión de contactos y comunicaciones
+
+    <a class="comunicaciones-enlace-inicio" th:href="@{/}">
+        Volver al inicio
+    </a>
+</footer>
+
+</body>
+</html>

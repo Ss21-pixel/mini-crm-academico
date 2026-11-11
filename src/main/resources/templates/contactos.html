@@ -6,76 +6,195 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Contactos - Mini CRM Académico</title>
+
+    <link rel="stylesheet" th:href="@{/css/contactos.css}">
+    <script th:src="@{/js/contactos.js}" defer></script>
 </head>
 
 <body>
 
-<h1>Mini CRM Académico</h1>
+<div class="contactos-contenedor">
 
-<h2>Lista de Contactos</h2>
+<header class="contactos-encabezado">
+    <div class="contactos-contenedor">
+        <h1>Mini CRM Académico</h1>
+        <p class="contactos-subtitulo">
+            Administración y seguimiento de contactos
+        </p>
 
-<p>
-    <a href="/contactos/nuevo">+ Registrar nuevo contacto</a>
-</p>
+        <nav class="navegacion">
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/contactos}" class="activo">Contactos</a></li>
+                <li><a th:href="@{/oportunidades}">Oportunidades</a></li>
+                <li><a th:href="@{/comunicaciones}">Comunicaciones</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-<table border="1">
+<main class="contactos-contenedor">
 
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Email</th>
-        <th>Teléfono</th>
-        <th>Programa</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
+    <section class="contactos-panel">
 
-    <tbody>
+        <div class="contactos-panel-encabezado">
+            <h2>Lista de contactos</h2>
+            <span class="contactos-contador">
+                Total: <strong th:text="${totalElementos}">0</strong>
+            </span>
+        </div>
 
-    <tr th:each="contacto : ${contactos}">
+        <div class="contactos-acciones">
+            <a th:href="@{/contactos/nuevo}"
+               class="contactos-boton contactos-boton-principal">
+                + Registrar contacto
+            </a>
+        </div>
 
-        <td th:text="${contacto.id}"></td>
+        <!-- Buscador del servidor -->
+        <form class="contactos-busqueda"
+              th:action="@{/contactos}"
+              method="get">
 
-        <td th:text="${contacto.nombre}"></td>
+            <div class="contactos-busqueda-campo">
+                <label for="buscadorContactos">
+                    Buscar contacto
+                </label>
 
-        <td th:text="${contacto.apellido}"></td>
+                <input type="search"
+                       id="buscadorContactos"
+                       name="q"
+                       th:value="${q}"
+                       placeholder="Nombre, apellido o correo...">
+            </div>
 
-        <td th:text="${contacto.email}"></td>
+            <input type="hidden" name="size" th:value="${size}">
 
-        <td th:text="${contacto.telefono}"></td>
+            <button type="submit"
+                    class="contactos-boton contactos-boton-principal">
+                Buscar
+            </button>
 
-        <td th:text="${contacto.programa}"></td>
+            <a class="contactos-boton contactos-boton-secundario"
+               th:href="@{/contactos}">
+                Limpiar
+            </a>
+        </form>
 
-        <td th:text="${contacto.estado}"></td>
+        <!-- Tabla de contactos -->
+        <div class="contactos-tabla-contenedor">
 
-        <td>
-            <a th:href="@{/contactos/editar/{id}(id=${contacto.id})}">
-                Editar
+            <table class="contactos-tabla" id="tablaContactos">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo electrónico</th>
+                    <th>Teléfono</th>
+                    <th>Programa</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="contacto : ${contactos}"
+                    data-contacto>
+
+                    <td th:text="${contacto.id}">1</td>
+                    <td th:text="${contacto.nombre}">Nombre</td>
+                    <td th:text="${contacto.apellido}">Apellido</td>
+                    <td th:text="${contacto.email}">correo@ejemplo.com</td>
+                    <td th:text="${contacto.telefono}">Teléfono</td>
+                    <td th:text="${contacto.programa}">Programa</td>
+
+                    <td>
+                        <span class="contactos-estado"
+                              th:text="${contacto.estado}">
+                            ACTIVO
+                        </span>
+                    </td>
+
+                    <td>
+                        <div class="contactos-acciones">
+
+                            <a class="contactos-boton contactos-boton-editar"
+                               th:href="@{/contactos/editar/{id}(id=${contacto.id})}">
+                                Editar
+                            </a>
+
+                            <form class="formulario-eliminar-contacto"
+                                  th:action="@{/contactos/eliminar/{id}(id=${contacto.id})}"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="contactos-boton contactos-boton-eliminar">
+                                    Eliminar
+                                </button>
+
+                            </form>
+
+                        </div>
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(contactos)}">
+                    <td colspan="8" class="contactos-sin-registros">
+                        No hay contactos para mostrar.
+                        Puedes registrar uno con el botón superior.
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+            <p id="mensajeSinResultados"
+               class="contactos-sin-registros"
+               hidden>
+                No se encontraron contactos que coincidan con la búsqueda.
+            </p>
+
+        </div>
+
+        <!-- Paginación -->
+        <nav class="contactos-paginacion"
+             th:if="${totalPaginas > 1}"
+             aria-label="Paginación de contactos">
+
+            <a th:if="${paginaActual > 0}"
+               class="contactos-boton contactos-boton-secundario"
+               th:href="@{/contactos(page=${paginaActual - 1},size=${size},q=${q})}">
+                Anterior
             </a>
 
-            |
+            <span class="contactos-paginacion-info">
+                Página
+                <strong th:text="${paginaActual + 1}">1</strong>
+                de
+                <strong th:text="${totalPaginas}">1</strong>
+            </span>
 
-            <a th:href="@{/contactos/eliminar/{id}(id=${contacto.id})}"
-               onclick="return confirm('¿Está seguro de eliminar este contacto?');">
-                Eliminar
+            <a th:if="${paginaActual + 1 < totalPaginas}"
+               class="contactos-boton contactos-boton-principal"
+               th:href="@{/contactos(page=${paginaActual + 1},size=${size},q=${q})}">
+                Siguiente
             </a>
-        </td>
 
-    </tr>
+        </nav>
 
-    </tbody>
+        <footer class="pie">
+            <a th:href="@{/}" class="enlace-inicio">
+                ← Volver al inicio
+            </a>
+        </footer>
 
-</table>
+    </main>
 
-<br>
+    </body>
 
-<a href="/">
-    Volver al inicio
-</a>
-
-</body>
-
-</html>
+    </html>

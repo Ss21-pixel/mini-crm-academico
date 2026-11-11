@@ -1,25 +1,14 @@
-const API = "/api";
-
-// =====================================================
-// FUNCIÓN PARA VALIDAR CAMPOS VACÍOS
-// =====================================================
+const API = "/api"
 
 function campoVacio(valor) {
     return valor === null ||
            valor === undefined ||
+
            String(valor).trim() === "";
 }
 
 // =====================================================
-// VARIABLES DE EDICIÓN
-// =====================================================
-
-let contactoEditando = null;
-let oportunidadEditando = null;
-let comunicacionEditando = null;
-
-// =====================================================
-// VALIDACIÓN DE CAMPOS OBLIGATORIOS
+// FUNCIÓN PARA VALIDAR CAMPOS VACÍOS
 // =====================================================
 
 function validarCampos(campos) {
@@ -31,14 +20,25 @@ function validarCampos(campos) {
         const elemento = document.getElementById(campo.id);
         const error = document.getElementById(campo.errorId);
 
-        if (campoVacio(campo.valor)) {
+        if (!elemento) {
+            console.error(`No se encontró el campo: ${campo.id}`);
+            formularioValido = false;
+            return;
+        }
 
-            error.style.display = "block";
+        const valor = elemento.value;
+
+        if (campoVacio(valor)) {
+            if (error) {
+                error.style.display = "block";
+            }
+
             formularioValido = false;
 
         } else {
-
-            error.style.display = "none";
+            if (error) {
+                error.style.display = "none";
+            }
         }
     });
 
@@ -236,7 +236,7 @@ document
                     document.getElementById(
                         "estado"
                     ).value
-           
+
                 };
 
                 const camposContacto = [
@@ -277,7 +277,7 @@ document
                         errorId: "error-estado"
                     }
                 ];
-    
+
                 if (!validarCampos(camposContacto)) {
                 return;
                 }

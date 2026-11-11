@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:8080/api/comunicaciones/2
+method: DELETE
+order: 19000

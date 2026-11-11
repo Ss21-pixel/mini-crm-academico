@@ -1,0 +1,484 @@
+/* =========================================
+   MINI CRM ACADEMICO - OPORTUNIDADES
+   ========================================= */
+
+   * {
+    box-sizing: border-box;
+}
+
+:root {
+    --principal: #1769aa;
+    --principal-hover: #104e83;
+    --azul-oscuro: #17365d;
+    --fondo: #f3f6fb;
+    --texto: #263445;
+    --secundario: #65758b;
+    --borde: #dce5ef;
+    --blanco: #ffffff;
+}
+
+body {
+    margin: 0;
+    padding: 30px 20px;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.oportunidades-contenedor {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* ENCABEZADO */
+
+.oportunidades-encabezado {
+    max-width: 1500px;
+    margin: 0 auto 25px;
+}
+
+.oportunidades-encabezado h1 {
+    margin: 0 0 7px;
+    color: var(--azul-oscuro);
+    font-size: 30px;
+}
+
+.oportunidades-subtitulo {
+    margin: 0;
+    color: var(--secundario);
+    font-size: 15px;
+}
+
+/* NAVEGACIÓN */
+
+.navegacion {
+    width: 100%;
+    margin-top: 18px;
+}
+
+.navegacion ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 12px 15px;
+    margin: 0;
+    background: var(--azul-oscuro);
+    border-radius: 8px;
+}
+
+.navegacion li {
+    margin: 0;
+}
+
+.navegacion a {
+    display: block;
+    padding: 9px 15px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background .2s;
+}
+
+.navegacion a:hover,
+.navegacion a.activo {
+    background: var(--principal);
+}
+
+/* PANEL */
+
+.oportunidades-panel {
+    margin-bottom: 20px;
+    padding: 25px 20px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--blanco);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+}
+
+.oportunidades-panel-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.oportunidades-panel h2 {
+    margin: 0;
+    color: var(--azul-oscuro);
+    font-size: 21px;
+}
+
+.oportunidades-contador {
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #eaf2fb;
+    color: #174f83;
+    font-size: 13px;
+}
+
+/* BOTONES */
+
+.oportunidades-boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.oportunidades-boton-principal,
+.oportunidades-boton-buscar {
+    background: var(--principal);
+    color: white;
+}
+
+.oportunidades-boton-principal:hover,
+.oportunidades-boton-buscar:hover {
+    background: var(--principal-hover);
+}
+
+.oportunidades-boton-secundario {
+    background: #e5eaf0;
+    color: var(--texto);
+}
+
+.oportunidades-boton-secundario:hover {
+    background: #d5dce5;
+}
+
+.oportunidades-acciones {
+    margin-bottom: 20px;
+}
+
+/* BUSCADOR */
+
+.oportunidades-busqueda {
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.oportunidades-busqueda-campo {
+    flex: 1;
+    min-width: 220px;
+    max-width: 480px;
+}
+
+.oportunidades-busqueda label,
+.oportunidades-campo label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.oportunidades-busqueda input,
+.oportunidades-campo input,
+.oportunidades-campo select,
+.oportunidades-campo textarea {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #bdc8d5;
+    border-radius: 7px;
+    background: white;
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.oportunidades-campo textarea {
+    min-height: 105px;
+    resize: vertical;
+}
+
+.oportunidades-busqueda input:focus,
+.oportunidades-campo input:focus,
+.oportunidades-campo select:focus,
+.oportunidades-campo textarea:focus {
+    outline: none;
+    border-color: var(--principal);
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, .12);
+}
+
+/* TABLA */
+
+.oportunidades-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.oportunidades-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.oportunidades-tabla thead {
+    background: var(--azul-oscuro);
+    color: white;
+}
+
+.oportunidades-tabla th,
+.oportunidades-tabla td {
+    padding: 13px 10px;
+    border-bottom: 1px solid var(--borde);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.oportunidades-tabla th {
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.oportunidades-tabla tbody tr:hover {
+    background: #f6f9fd;
+}
+
+.oportunidades-tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.oportunidades-sin-registros {
+    padding: 30px !important;
+    color: var(--secundario);
+    text-align: center !important;
+}
+
+/* ESTADOS */
+
+.oportunidades-estado,
+.oportunidades-prioridad {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.estado-abierta {
+    background: #eaf2fb;
+    color: #174f83;
+}
+
+.estado-proceso {
+    background: #fff4db;
+    color: #946200;
+}
+
+.estado-ganada {
+    background: #e5f6eb;
+    color: #237a42;
+}
+
+.estado-perdida {
+    background: #feeceb;
+    color: #b42318;
+}
+
+.prioridad-alta {
+    background: #feeceb;
+    color: #b42318;
+}
+
+.prioridad-media {
+    background: #fff4db;
+    color: #946200;
+}
+
+.prioridad-baja {
+    background: #e5f6eb;
+    color: #237a42;
+}
+
+/* ACCIONES DE TABLA */
+
+.oportunidades-acciones-tabla {
+    white-space: nowrap;
+}
+
+.oportunidades-boton-tabla {
+    display: inline-block;
+    margin: 2px;
+    padding: 9px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.oportunidades-editar {
+    background: #eaf2fb;
+    color: #174f83;
+}
+
+.oportunidades-editar:hover {
+    background: #d5e7fa;
+}
+
+.oportunidades-eliminar {
+    background: #feeceb;
+    color: #b42318;
+}
+
+.oportunidades-eliminar:hover {
+    background: #fbd5d2;
+}
+
+/* PAGINACIÓN */
+
+.oportunidades-paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.oportunidades-paginacion span {
+    color: var(--secundario);
+    font-size: 12px;
+}
+
+/* FORMULARIO */
+
+.formulario-panel {
+    margin-top: 25px;
+}
+
+.oportunidades-formulario-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.oportunidades-campo {
+    min-width: 0;
+}
+
+.campo-completo {
+    grid-column: 1 / -1;
+}
+
+.oportunidades-formulario-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* MENSAJES */
+
+.oportunidades-mensaje {
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    border: 1px solid #a5d6a7;
+    border-radius: 8px;
+    background: #e8f5e9;
+    color: #256029;
+    font-size: 13px;
+}
+
+.oportunidades-mensaje.error {
+    border-color: #f0b8b8;
+    background: #fff0f0;
+    color: #b42318;
+}
+
+/* PIE DE PÁGINA */
+
+.oportunidades-pie {
+    margin: 30px auto 0;
+    padding: 20px;
+    color: var(--secundario);
+    text-align: center;
+    font-size: 12px;
+}
+
+.oportunidades-pie p {
+    margin: 4px 0;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .oportunidades-encabezado h1 {
+        font-size: 25px;
+    }
+
+    .navegacion ul {
+        justify-content: flex-start;
+        gap: 5px;
+    }
+
+    .navegacion a {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .oportunidades-panel {
+        padding: 17px 13px;
+    }
+
+    .oportunidades-tabla {
+        min-width: 1100px;
+    }
+
+    .oportunidades-formulario-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-completo {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .oportunidades-encabezado h1 {
+        font-size: 22px;
+    }
+
+    .oportunidades-busqueda {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .oportunidades-busqueda-campo {
+        max-width: 100%;
+    }
+
+    .oportunidades-boton {
+        width: 100%;
+    }
+}

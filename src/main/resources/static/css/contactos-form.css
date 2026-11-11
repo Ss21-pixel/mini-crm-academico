@@ -1,0 +1,251 @@
+:root {
+    --principal: #1769aa;
+    --hover: #104e83;
+    --oscuro: #17365d;
+    --fondo: #f3f6fb;
+    --texto: #263445;
+    --secundario: #65758b;
+    --borde: #dce5ef;
+    --blanco: #ffffff;
+    --error: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    min-height: 100vh;
+    padding: 35px 20px;
+}
+
+.form-contenedor {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.form-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.form-etiqueta {
+    display: inline-block;
+    color: var(--principal);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.form-encabezado h1 {
+    color: var(--oscuro);
+    font-size: 28px;
+    margin-bottom: 7px;
+}
+
+.form-encabezado p {
+    color: var(--secundario);
+    font-size: 14px;
+}
+
+.form-panel {
+    background: var(--blanco);
+    padding: 35px;
+    border-radius: 14px;
+    border: 1px solid var(--borde);
+    box-shadow: 0 5px 20px rgba(23, 54, 93, 0.07);
+}
+
+.form-titulo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.form-icono {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: #eaf3fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+.form-titulo h2 {
+    color: var(--oscuro);
+    font-size: 21px;
+    margin-bottom: 7px;
+}
+
+.form-titulo p {
+    color: var(--secundario);
+    font-size: 14px;
+}
+
+.form-separador {
+    height: 1px;
+    background: var(--borde);
+    margin: 28px 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 22px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-completo {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    color: var(--texto);
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 9px;
+}
+
+.campo label span,
+.form-ayuda span {
+    color: var(--error);
+}
+
+.campo input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--texto);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo input::placeholder {
+    color: #9aa8b8;
+}
+
+.campo input:focus {
+    border-color: var(--principal);
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+}
+
+.error-campo {
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+.form-ayuda {
+    color: var(--secundario);
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+.form-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid var(--borde);
+    margin-top: 25px;
+    padding-top: 23px;
+}
+
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 20px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.boton:hover {
+    transform: translateY(-1px);
+}
+
+.boton-principal {
+    background: var(--principal);
+    color: white;
+}
+
+.boton-principal:hover {
+    background: var(--hover);
+}
+
+.boton-secundario {
+    background: #edf2f7;
+    color: var(--oscuro);
+    border: 1px solid var(--borde);
+}
+
+.boton-secundario:hover {
+    background: #e1e9f2;
+}
+
+.form-footer {
+    text-align: center;
+    color: var(--secundario);
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+@media (max-width: 650px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .form-encabezado {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-encabezado h1 {
+        font-size: 23px;
+    }
+
+    .form-panel {
+        padding: 23px 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 19px;
+    }
+
+    .campo-completo {
+        grid-column: auto;
+    }
+
+    .form-acciones {
+        flex-direction: column-reverse;
+    }
+
+    .form-acciones .boton {
+        width: 100%;
+    }
+}

@@ -1,0 +1,296 @@
+/* =========================================
+   FORMULARIO DE OPORTUNIDADES
+   Estilos generales
+   ========================================= */
+
+   * {
+    box-sizing: border-box;
+}
+
+:root {
+    --color-principal: #1769aa;
+    --color-principal-hover: #104e83;
+    --color-fondo: #f3f6fb;
+    --color-texto: #263445;
+    --color-texto-secundario: #65758b;
+    --color-borde: #bdc8d5;
+    --color-error: #c62828;
+    --color-blanco: #ffffff;
+    --color-volver: #e5eaf0;
+    --color-volver-hover: #d4dce6;
+}
+
+body {
+    margin: 0;
+    padding: 30px 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.5;
+}
+
+/* =========================================
+   CONTENEDOR PRINCIPAL
+   ========================================= */
+
+.contenedor {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px;
+    background: var(--color-blanco);
+    border: 1px solid #e3e9f0;
+    border-radius: 14px;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+   TITULOS Y DESCRIPCION
+   ========================================= */
+
+h1 {
+    margin: 0 0 10px;
+    color: #17365d;
+    text-align: center;
+    font-size: 28px;
+    line-height: 1.3;
+}
+
+.descripcion {
+    margin: 0 0 30px;
+    color: var(--color-texto-secundario);
+    text-align: center;
+    font-size: 15px;
+}
+
+/* =========================================
+   CAMPOS DEL FORMULARIO
+   ========================================= */
+
+.grupo {
+    margin-bottom: 22px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-texto);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 12px;
+    border: 1px solid var(--color-borde);
+    border-radius: 7px;
+    background: var(--color-blanco);
+    color: var(--color-texto);
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #8b98a8;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-principal);
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.14);
+}
+
+/* Resaltar los campos que el usuario debe corregir */
+
+input.invalido,
+select.invalido,
+textarea.invalido {
+    border-color: var(--color-error);
+    background-color: #fffafa;
+}
+
+input.valido,
+select.valido,
+textarea.valido {
+    border-color: #2e7d32;
+}
+
+/* =========================================
+   MENSAJES DE VALIDACION
+   ========================================= */
+
+.error {
+    display: block;
+    margin-top: 6px;
+    color: var(--color-error);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.error:empty {
+    display: none;
+}
+
+.ayuda {
+    display: block;
+    margin-top: 6px;
+    color: var(--color-texto-secundario);
+    font-size: 12px;
+}
+
+.error-general {
+    margin-bottom: 22px;
+    padding: 12px 15px;
+    border: 1px solid #ffcdd2;
+    border-radius: 7px;
+    background: #ffebee;
+    color: #b71c1c;
+}
+
+.error-general p {
+    margin: 4px 0;
+}
+
+/* =========================================
+   BOTONES Y ACCIONES
+   ========================================= */
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e6ebf1;
+}
+
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 11px 20px;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.guardar {
+    background: var(--color-principal);
+    color: var(--color-blanco);
+}
+
+.guardar:hover {
+    background: var(--color-principal-hover);
+}
+
+.guardar:active,
+.volver:active {
+    transform: translateY(1px);
+}
+
+.volver {
+    background: var(--color-volver);
+    color: var(--color-texto);
+}
+
+.volver:hover {
+    background: var(--color-volver-hover);
+}
+
+.boton:focus-visible {
+    outline: 3px solid #82b6f2;
+    outline-offset: 3px;
+}
+
+/* =========================================
+   ADAPTACION A CELULARES Y TABLETAS
+   ========================================= */
+
+@media (max-width: 600px) {
+    body {
+        padding: 16px 10px;
+    }
+
+    .contenedor {
+        padding: 22px 17px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+
+    .descripcion {
+        font-size: 14px;
+    }
+
+    .acciones {
+        flex-direction: column;
+    }
+
+    .boton {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   RESPETO POR PREFERENCIAS DE MOVIMIENTO
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}
+/* NAVEGACIÓN PRINCIPAL */
+.navegacion ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.navegacion a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.navegacion a:hover {
+    opacity: 0.7;
+}
+
+/* PIE DE PÁGINA */
+.pie-pagina {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}

@@ -16,6 +16,15 @@
 <header>
     <h1>Mini CRM Académico</h1>
     <p>Gestión de contactos, oportunidades y comunicaciones</p>
+
+    <nav>
+        <ul>
+            <li><a th:href="@{/Inicio}">Inicio</a></li>
+            <li><a th:href="@{/contactos}">Contactos</a></li>
+            <li><a th:href="@{/oportunidades}">Oportunidades</a></li>
+            <li><a th:href="@{/comunicaciones}">Comunicaciones</a></li>
+        </ul>
+    </nav>
 </header>
 
 <div class="contenedor">
@@ -108,7 +117,7 @@
                     <option value="Bases de Datos">Bases de Datos</option> 
                     <option value="Programación"> Programación</option>
                     <option value="Ciberseguridad">Ciberseguridad</option>
-                    </option>
+
                 </select>
                 <small id="error-programa" class="error-campo">Campo obligatorio</small>
             </div>
@@ -118,8 +127,8 @@
 
                 <select id="estado" required>
                     <option value="">Seleccione un estado</option>
-                    <option value="Activo ">Activo</option>
-                    <option value="Inactivo ">Inactivo</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
                     <option value="En proceso">En proceso</option>
 
                 </select>
@@ -196,7 +205,7 @@
     <section id="oportunidades" class="seccion">
 
         <h2 id="tituloFormularioOportunidad">
-            🎯 Registrar oportunidad
+            Registrar oportunidad
         </h2>
 
 
@@ -437,7 +446,7 @@
     <section id="comunicaciones" class="seccion">
 
         <h2 id="tituloFormularioComunicacion">
-            💬 Registrar comunicación
+             Registrar comunicación
         </h2>
 
 

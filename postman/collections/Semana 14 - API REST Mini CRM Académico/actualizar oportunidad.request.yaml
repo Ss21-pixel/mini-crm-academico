@@ -1,0 +1,27 @@
+$kind: http-request
+url: http://localhost:8080/api/oportunidades/2
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \  \"titulo\": \"Oportunidad Actualizada Semana 14\",\r
+
+    \  \"descripcion\": \"Oportunidad modificada para demostrar la operación PUT\",\r
+
+    \  \"estado\": \"En proceso\",\r
+
+    \  \"prioridad\": \"Alta\",\r
+
+    \  \"fechaCreacion\": \"2026-11-11\",\r
+
+    \  \"fechaSeguimiento\": \"2026-11-25\",\r
+
+    \  \"contacto\": {\r
+
+    \    \"id\": 2\r
+
+    \  }\r
+
+    }"
+order: 12000
