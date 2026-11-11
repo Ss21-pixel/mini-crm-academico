@@ -1,431 +1,303 @@
 # Mini CRM Académico
 
-Aplicación web desarrollada con **Spring Boot** para la gestión de contactos, oportunidades y comunicaciones dentro de un proyecto de CRM académico.
+## Descripción del proyecto
 
-El proyecto utiliza una arquitectura organizada por capas, integrando **Controllers, Services, Repositories y Entities**, además de una interfaz web con **Thymeleaf** y una API REST consumida desde JavaScript.
+Mini CRM Académico es una aplicación web desarrollada con Spring Boot que permite gestionar contactos, oportunidades y comunicaciones dentro de un entorno académico.
+
+El proyecto implementa operaciones CRUD (Crear, Consultar, Actualizar y Eliminar), utilizando Java, Spring Boot, Spring MVC, Spring Data JPA, MySQL y tecnologías web.
+
+## Objetivo general
+
+Desarrollar una aplicación web con una API REST que permita administrar la información de contactos, oportunidades y comunicaciones, aplicando estándares y buenas prácticas de desarrollo de software.
 
 ## Tecnologías utilizadas
 
-* Java
-* Spring Boot 4.1.0
-* Maven
-* Spring MVC / Web
-* Spring Data JPA
-* Thymeleaf
-* Spring Boot DevTools
-* Spring Boot Validation
-* MySQL
-* HTML
-* CSS
-* JavaScript
-* Git y GitHub
-
-## Arquitectura del proyecto
-
-El proyecto está organizado siguiendo una separación de responsabilidades:
-
-```text
-Cliente web
-    │
-    ├── Interfaz HTML + CSS + JavaScript
-    │
-    ↓
-Controller
-    │
-    ↓
-Service
-    │
-    ↓
-Repository
-    │
-    ↓
-Entity
-    │
-    ↓
-MySQL
-```
-
-También se utiliza un controlador MVC para la vista dinámica con Thymeleaf:
-
-```text
-Navegador
-    ↓
-ContactoController
-    ↓
-ContactoService
-    ↓
-ContactoRepository
-    ↓
-Contacto
-    ↓
-contactos.html
-```
-
-## Estructura principal
-
-```text
-mini-crm-academico/
-│
-├── .mvn/
-│   └── wrapper/
-│
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── etitc/
-│   │   │           └── crm/
-│   │   │               ├── MiniCrmAcademicoApplication.java
-│   │   │               │
-│   │   │               ├── controller/
-│   │   │               │   ├── ComunicacionController.java
-│   │   │               │   ├── ContactoController.java
-│   │   │               │   ├── ContactoRestController.java
-│   │   │               │   ├── OportunidadController.java
-│   │   │               │   └── SaludoController.java
-│   │   │               │
-│   │   │               ├── entity/
-│   │   │               │   ├── Comunicacion.java
-│   │   │               │   ├── Contacto.java
-│   │   │               │   └── Oportunidad.java
-│   │   │               │
-│   │   │               ├── repository/
-│   │   │               │   ├── ComunicacionRepository.java
-│   │   │               │   ├── ContactoRepository.java
-│   │   │               │   └── OportunidadRepository.java
-│   │   │               │
-│   │   │               └── service/
-│   │   │                   ├── ComunicacionService.java
-│   │   │                   ├── ContactoService.java
-│   │   │                   └── OportunidadService.java
-│   │   │
-│   │   └── resources/
-│   │       ├── static/
-│   │       │   └── index.html
-│   │       │
-│   │       ├── templates/
-│   │       │   └── contactos.html
-│   │       │
-│   │       └── application.properties
-│   │
-│   └── test/
-│       └── java/
-│           └── com/
-│               └── etitc/
-│                   └── crm/
-│                       └── MiniCrmAcademicoApplicationTests.java
-│
-├── .gitattributes
-├── .gitignore
-├── mvnw
-├── mvnw.cmd
-├── pom.xml
-└── README.md
-```
-
-## Entidades del proyecto
-
-El proyecto cuenta actualmente con las siguientes entidades:
-
-### Contacto
-
-La entidad `Contacto` contiene:
-
-* `id`
-* `nombre`
-* `apellido`
-* `email`
-* `telefono`
-* `programa`
-* `estado`
-
-Está mapeada a la tabla `contactos` de MySQL.
-
-### Oportunidad
-
-El proyecto también contiene la entidad `Oportunidad`, utilizada para representar oportunidades relacionadas con los contactos.
-
-### Comunicación
-
-La entidad `Comunicacion` representa las comunicaciones asociadas al proyecto.
-
-## Servicios
-
-Actualmente existen los siguientes servicios:
-
-* `ContactoService`
-* `OportunidadService`
-* `ComunicacionService`
-
-Estos servicios utilizan los respectivos repositories para trabajar con la información almacenada.
-
-## Repositories
-
-El proyecto utiliza Spring Data JPA con:
-
-* `ContactoRepository`
-* `OportunidadRepository`
-* `ComunicacionRepository`
-
-Estos repositories permiten trabajar con la persistencia de las entidades.
-
-## Interfaz web
-
-El archivo principal de la interfaz se encuentra en:
-
-```text
-src/main/resources/static/index.html
-```
-
-La página utiliza:
-
-* HTML
-* CSS
-* JavaScript
-* `fetch()`
-
-El JavaScript realiza solicitudes a la API REST mediante rutas bajo `/api`.
-
-Entre las solicitudes implementadas actualmente se encuentran:
-
-```text
-/api/contactos
-/api/oportunidades
-/api/comunicaciones
-```
-
-También existen operaciones de creación, actualización, consulta y eliminación mediante las solicitudes HTTP correspondientes que están implementadas en el JavaScript del proyecto.
-
-## Thymeleaf
-
-Para la implementación de Spring MVC se creó la plantilla:
-
-```text
-src/main/resources/templates/contactos.html
-```
-
-Esta vista utiliza Thymeleaf para mostrar dinámicamente los contactos enviados desde `ContactoController`.
-
-Entre las expresiones utilizadas se encuentran:
-
-```html
-th:each
-```
-
-y:
-
-```html
-th:text
-```
-
-La ruta correspondiente es:
-
-```text
-/contactos
-```
-
-## API REST
-
-El proyecto cuenta con un controlador REST para contactos:
-
-```text
-ContactoRestController.java
-```
-
-La ruta base es:
-
-```text
-/api/contactos
-```
-
-También existe:
-
-```text
-SaludoController.java
-```
-
-con la ruta:
-
-```text
-/api/saludo
-```
-
-La respuesta actual de esta ruta es:
-
-```text
-Mini CRM Académico - Spring Boot funcionando
-```
-
-## Rutas principales
-
-Con la aplicación ejecutándose en el puerto 8080 se pueden probar las siguientes rutas:
-
-### Página principal
-
-```text
-http://localhost:8080/
-```
-
-### Vista MVC de contactos
-
-```text
-http://localhost:8080/contactos
-```
-
-### API de saludo
-
-```text
-http://localhost:8080/api/saludo
-```
-
-### API de contactos
+- Java 21
+- Spring Boot 4.1.1
+- Spring MVC
+- Spring Data JPA
+- Spring Validation
+- MySQL
+- HTML5
+- CSS3
+- JavaScript
+- Thymeleaf
+- Maven
+- Git y GitHub
+- Postman
+
+## Funcionalidades principales
+
+- Gestión de contactos.
+- Gestión de oportunidades.
+- Registro y consulta de comunicaciones.
+- Consulta y búsqueda de registros.
+- Edición y eliminación de información.
+- Validación de datos.
+- API REST para las operaciones CRUD.
+- Manejo centralizado de excepciones y errores HTTP.
+
+---
+
+# Semana 13 - API CRUD con Spring
+
+## Descripción
+
+Durante la Semana 13 se implementó una API REST para administrar contactos mediante operaciones CRUD, utilizando Spring Boot y controladores REST.
+
+La API permite intercambiar información en formato JSON y realizar solicitudes HTTP.
+
+## URL base
 
 ```text
 http://localhost:8080/api/contactos
 ```
 
-## Configuración
+## Endpoints implementados
 
-La configuración principal se encuentra en:
+| Método HTTP | Endpoint | Funcionalidad |
+|---|---|---|
+| GET | `/api/contactos` | Listar contactos |
+| GET | `/api/contactos/{id}` | Consultar contacto por ID |
+| POST | `/api/contactos` | Registrar contacto |
+| PUT | `/api/contactos/{id}` | Actualizar contacto |
+| DELETE | `/api/contactos/{id}` | Eliminar contacto |
+
+## Ejemplo de registro de contacto
+
+Método: POST
+
+```json
+{
+  "nombre": "Carlos",
+  "apellido": "Rodriguez",
+  "email": "carlos.prueba13@gmail.com",
+  "telefono": "3001234567",
+  "programa": "Tecnología en Desarrollo de Software",
+  "estado": "ACTIVO"
+}
+```
+
+---
+
+# Semana 14 - API REST con estándares y buenas prácticas
+
+## Descripción
+
+En la Semana 14 se continuó trabajando sobre la API REST desarrollada en la Semana 13, mejorando su organización, validaciones, respuestas HTTP y manejo de errores.
+
+Se conservaron las funcionalidades existentes y se trabajó en los tres módulos principales del sistema:
+
+- Contactos.
+- Oportunidades.
+- Comunicaciones.
+
+## Objetivos de la Semana 14
+
+- Aplicar buenas prácticas en el diseño de una API REST.
+- Organizar los controladores y servicios.
+- Utilizar correctamente los métodos HTTP.
+- Implementar respuestas HTTP apropiadas.
+- Validar los datos recibidos.
+- Manejar errores mediante excepciones.
+- Comprobar las operaciones utilizando Postman.
+
+## Endpoints de la API REST
+
+### 1. Contactos
+
+URL base:
 
 ```text
-src/main/resources/application.properties
+http://localhost:8080/api/contactos
 ```
 
-Actualmente incluye:
+| Método HTTP | Endpoint | Descripción |
+|---|---|---|
+| GET | `/api/contactos` | Consultar contactos |
+| GET | `/api/contactos/{id}` | Consultar contacto por ID |
+| POST | `/api/contactos` | Crear contacto |
+| PUT | `/api/contactos/{id}` | Actualizar contacto |
+| DELETE | `/api/contactos/{id}` | Eliminar contacto |
 
-```properties
-spring.application.name=mini-crm-academico
-server.port=8080
-spring.profiles.active=dev
-logging.level.com.etitc.crm=DEBUG
-```
+### 2. Oportunidades
 
-También contiene la configuración de conexión con MySQL, JPA y Thymeleaf.
-
-## Base de datos
-
-El proyecto utiliza MySQL con la base de datos:
+URL base:
 
 ```text
-mini_crm_academico
+http://localhost:8080/api/oportunidades
 ```
 
-La aplicación se conecta actualmente mediante:
+| Método HTTP | Endpoint | Descripción |
+|---|---|---|
+| GET | `/api/oportunidades` | Consultar oportunidades |
+| GET | `/api/oportunidades/{id}` | Consultar oportunidad por ID |
+| POST | `/api/oportunidades` | Crear oportunidad |
+| PUT | `/api/oportunidades/{id}` | Actualizar oportunidad |
+| DELETE | `/api/oportunidades/{id}` | Eliminar oportunidad |
+
+### 3. Comunicaciones
+
+URL base:
 
 ```text
-localhost:3306
+http://localhost:8080/api/comunicaciones
 ```
 
-Spring Data JPA se utiliza para la persistencia de las entidades.
+| Método HTTP | Endpoint | Descripción |
+|---|---|---|
+| GET | `/api/comunicaciones` | Consultar comunicaciones |
+| GET | `/api/comunicaciones/{id}` | Consultar comunicación por ID |
+| POST | `/api/comunicaciones` | Crear comunicación |
+| PUT | `/api/comunicaciones/{id}` | Actualizar comunicación |
+| DELETE | `/api/comunicaciones/{id}` | Eliminar comunicación |
 
-## Maven
+## Métodos HTTP y códigos de respuesta
 
-El proyecto utiliza Maven y cuenta con Maven Wrapper:
+La API utiliza los siguientes códigos de estado HTTP:
+
+| Código | Nombre | Descripción |
+|---|---|---|
+| 200 | OK | Operación realizada correctamente |
+| 201 | Created | Registro creado correctamente |
+| 204 | No Content | Registro eliminado correctamente |
+| 400 | Bad Request | Datos inválidos o solicitud incorrecta |
+| 404 | Not Found | Registro no encontrado |
+| 409 | Conflict | Conflicto con datos relacionados |
+| 500 | Internal Server Error | Error interno del servidor |
+
+## Validaciones implementadas
+
+Se incorporaron validaciones para garantizar la integridad de la información enviada a la API.
+
+Entre ellas:
+
+- Campos obligatorios.
+- Validación del formato del correo electrónico.
+- Restricciones de longitud en los campos.
+- Validación de información recibida.
+- Prevención de correos electrónicos duplicados en contactos.
+- Control de registros inexistentes.
+- Manejo de conflictos relacionados con registros asociados.
+
+## Organización y buenas prácticas
+
+Para mejorar la estructura del proyecto se utilizaron diferentes componentes:
+
+- **Controladores REST:** reciben y procesan las solicitudes HTTP.
+- **Servicios:** contienen la lógica de negocio.
+- **DTO:** permiten organizar la información de entrada y salida de la API.
+- **Validaciones:** verifican que los datos cumplan las condiciones establecidas.
+- **GlobalExceptionHandler:** centraliza el manejo de excepciones y respuestas de error.
+- **Repositorios:** permiten acceder a la información almacenada en la base de datos.
+
+## Pruebas realizadas con Postman
+
+Se utilizó Postman para comprobar el funcionamiento de los endpoints de los tres módulos.
+
+Se realizaron las siguientes pruebas:
+
+1. GET: consultar todos los registros.
+2. GET por ID: consultar un registro específico.
+3. POST: crear un nuevo registro.
+4. PUT: actualizar un registro existente.
+5. DELETE: eliminar un registro.
+6. Consulta de registros inexistentes.
+7. Envío de información inválida.
+8. Validación de correos electrónicos duplicados.
+9. Comprobación de conflictos por relaciones entre registros.
+
+## Resultados de las pruebas
+
+| Prueba | Resultado esperado | Estado |
+|---|---|---|
+| Consultar registros | 200 OK | Correcto |
+| Crear registro | 201 Created | Correcto |
+| Actualizar registro | 200 OK | Correcto |
+| Eliminar registro | 204 No Content | Correcto |
+| Consultar ID inexistente | 404 Not Found | Correcto |
+| Enviar datos inválidos | 400 Bad Request | Correcto |
+| Registrar correo duplicado | 400 Bad Request | Correcto |
+| Eliminar registro relacionado | 409 Conflict | Correcto |
+
+## Colección de Postman
+
+Se creó una colección denominada:
+
+**Semana 14 - API REST Mini CRM Académico**
+
+Esta colección contiene las solicitudes necesarias para probar los endpoints de contactos, oportunidades y comunicaciones.
+
+La colección se encuentra dentro del repositorio en:
 
 ```text
-mvnw
-mvnw.cmd
-.mvn/
+postman/collections/
 ```
 
-Para compilar el proyecto:
+## Cómo ejecutar el proyecto
 
-```powershell
-.\mvnw.cmd clean package
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/Ss21-pixel/mini-crm-academico.git
 ```
 
-Para ejecutar la aplicación:
+### 2. Ingresar a la carpeta
+
+```bash
+cd mini-crm-academico
+```
+
+### 3. Configurar la conexión a MySQL
+
+Revisar los datos de conexión en los archivos de configuración del proyecto.
+
+### 4. Ejecutar la aplicación
+
+En PowerShell utilizar:
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-## Verificación del proyecto
-
-La aplicación fue comprobada ejecutando:
-
-```powershell
-.\mvnw.cmd clean package
-```
-
-El proceso finalizó correctamente con:
+### 5. Abrir la aplicación
 
 ```text
-BUILD SUCCESS
+http://localhost:8080/
 ```
 
-También se verificó el inicio de Spring Boot en el puerto:
+### 6. Probar la API REST
+
+Contactos:
 
 ```text
-8080
+http://localhost:8080/api/contactos
 ```
 
-La aplicación fue ejecutada con Java:
+Oportunidades:
 
 ```text
-Java 21.0.2
+http://localhost:8080/api/oportunidades
 ```
 
-mientras que el proyecto está configurado para compilar con:
+Comunicaciones:
 
 ```text
-Java 17
+http://localhost:8080/api/comunicaciones
 ```
 
-También se verificó la conexión con MySQL y la detección de los repositories de Spring Data JPA.
+## Repositorio GitHub
 
-## Control de versiones
-
-El proyecto utiliza Git y está publicado en GitHub.
+Proyecto académico individual desarrollado como parte de la asignatura Programación IV.
 
 Repositorio:
 
-```text
 https://github.com/Ss21-pixel/mini-crm-academico
-```
 
-## Avances registrados
+## Conclusión
 
-El repositorio contiene commits relacionados con los avances y recuperación de evidencias de las primeras semanas del proyecto.
+Durante las semanas 13 y 14 se desarrolló y mejoró una API REST para el sistema Mini CRM Académico. Se implementaron operaciones CRUD para contactos, oportunidades y comunicaciones, aplicando métodos HTTP, códigos de respuesta, validaciones y manejo centralizado de excepciones.
 
-Entre ellos:
+Las pruebas realizadas con Postman permitieron verificar el funcionamiento de los endpoints y comprobar las respuestas de la API ante solicitudes correctas e incorrectas.
 
-```text
-feat: proyecto inicial mini crm academico
-feat: implementacion spring mvc y thymeleaf semana 4
-feat: recuperar evidencia semana 1 spring boot y api rest
-feat: recuperar evidencia semana 2 spring boot
-feat: recuperar evidencia semana 3 configuracion spring boot
-```
-
-## Estado actual
-
-Actualmente el proyecto cuenta con:
-
-* Spring Boot configurado y ejecutable.
-* Maven y Maven Wrapper.
-* Spring MVC.
-* Spring Data JPA.
-* MySQL.
-* Entities.
-* Repositories.
-* Services.
-* Controllers.
-* API REST.
-* Interfaz web estática con HTML, CSS y JavaScript.
-* Vista dinámica con Thymeleaf.
-* Configuración mediante `application.properties`.
-* Repositorio Git y GitHub.
-
-## Objetivo del proyecto
-
-El proyecto busca servir como una base de CRM académico para gestionar información relacionada con:
-
-```text
-Contactos
-Oportunidades
-Comunicaciones
-```
-
-La aplicación se encuentra en desarrollo acumulativo y continuará incorporando funcionalidades durante las siguientes etapas del proyecto.
+El proyecto permite aplicar los conocimientos de Spring Boot, arquitectura MVC, persistencia de datos, desarrollo de servicios REST y buenas prácticas de programación.
